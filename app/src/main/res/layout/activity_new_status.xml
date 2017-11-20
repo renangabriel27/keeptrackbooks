@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="renan.tsi.pro.br.keeptrackbooks.NewStatusActivity">
+    tools:context="renan.tsi.pro.br.keeptrackbooks.activities.NewStatusActivity">
 
     <TextView
         android:id="@+id/textView6"
@@ -82,14 +82,14 @@
         tools:layout_editor_absoluteX="102dp">
 
         <Button
-            android:id="@+id/button16"
+            android:id="@+id/backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="BACK" />
 
         <Button
-            android:id="@+id/button15"
+            android:id="@+id/createStatusBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

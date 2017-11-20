@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="renan.tsi.pro.br.keeptrackbooks.CategoriesActivity">
+    tools:context="renan.tsi.pro.br.keeptrackbooks.activities.CategoriesActivity">
 
     <TextView
         android:id="@+id/textView2"
@@ -49,14 +49,14 @@
         tools:layout_editor_absoluteX="68dp">
 
         <Button
-            android:id="@+id/button10"
+            android:id="@+id/backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="BACK" />
 
         <Button
-            android:id="@+id/button11"
+            android:id="@+id/newCategoryBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

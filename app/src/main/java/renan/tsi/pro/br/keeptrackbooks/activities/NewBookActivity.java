@@ -1,13 +1,17 @@
-package renan.tsi.pro.br.keeptrackbooks;
+package renan.tsi.pro.br.keeptrackbooks.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class NewBookActivity extends AppCompatActivity {
+import renan.tsi.pro.br.keeptrackbooks.R;
+
+public class NewBookActivity extends MainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_book);
+
+        changeToMain();
     }
 }

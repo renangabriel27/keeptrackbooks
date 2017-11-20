@@ -9,19 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BooksActivity" />
-        <activity android:name=".CategoriesActivity" />
-        <activity android:name=".NewBookActivity" />
-        <activity android:name=".NewCategoryActivity" />
-        <activity android:name=".StatusActivity" />
-        <activity android:name=".NewStatusActivity"></activity>
+        <activity android:name=".activities.BooksActivity" />
+        <activity android:name=".activities.CategoriesActivity" />
+        <activity android:name=".activities.NewBookActivity" />
+        <activity android:name=".activities.NewCategoryActivity" />
+        <activity android:name=".activities.StatusActivity" />
+        <activity android:name=".activities.NewStatusActivity"></activity>
     </application>
 
 </manifest>
