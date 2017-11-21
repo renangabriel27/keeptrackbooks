@@ -79,7 +79,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return title + " [" + numberPages + " pgs] - " + categoryId;
+        return title + " [" + numberPages + " pgs] - " + category.getName();
     }
 
     public static Book find(int id, Context context) {

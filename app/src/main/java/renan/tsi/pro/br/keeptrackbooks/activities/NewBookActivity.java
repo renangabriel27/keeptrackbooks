@@ -1,7 +1,5 @@
 package renan.tsi.pro.br.keeptrackbooks.activities;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,18 +8,14 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import renan.tsi.pro.br.keeptrackbooks.R;
 import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteBookDatabase;
-import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteCategoryDatabase;
 import renan.tsi.pro.br.keeptrackbooks.models.Book;
 import renan.tsi.pro.br.keeptrackbooks.models.Category;
-
-import static android.util.Log.*;
 
 public class NewBookActivity extends MainActivity {
 
@@ -40,7 +34,7 @@ public class NewBookActivity extends MainActivity {
                 android.R.layout.simple_dropdown_item_1line, getCategories());
 
         AutoCompleteTextView textView = (AutoCompleteTextView)
-                findViewById(R.id.selectCategory);
+                findViewById(R.id.editSelectCategory);
 
         textView.setAdapter(catAdapter);
         textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -74,10 +68,10 @@ public class NewBookActivity extends MainActivity {
         createBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText nameBook = (EditText) findViewById(R.id.nameBook);
-                EditText numberPages = (EditText) findViewById(R.id.numberPages);
+                EditText nameBook = (EditText) findViewById(R.id.editNameBook);
+                EditText numberPages = (EditText) findViewById(R.id.editNumberPages);
                 AutoCompleteTextView textView = (AutoCompleteTextView)
-                        findViewById(R.id.selectCategory);
+                        findViewById(R.id.editSelectCategory);
 
 
                 if (fieldIsEmpty(nameBook) || fieldIsEmpty(numberPages)){

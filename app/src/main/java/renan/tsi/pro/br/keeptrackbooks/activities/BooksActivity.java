@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -29,9 +30,21 @@ public class BooksActivity extends MainActivity {
 
         ListView lv = (ListView) findViewById(R.id.booksListView);
 
-        ListAdapter bookAdapter = new BookAdapter(
+        final ListAdapter bookAdapter = new BookAdapter(
                 (ArrayList<Book>) Book.all(getApplicationContext()), getLayoutInflater());
         lv.setAdapter(bookAdapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle params = new Bundle();
+                params.putLong("id", bookAdapter.getItemId(position));
+                Intent intent = new Intent(getBaseContext(), EditBookActivity.class);
+                intent.putExtras(params);
+                startActivity(intent);
+            }
+        });
     }
 
     private void changeToNewBook() {
