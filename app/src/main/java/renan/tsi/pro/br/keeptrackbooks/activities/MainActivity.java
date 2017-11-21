@@ -14,7 +14,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import renan.tsi.pro.br.keeptrackbooks.R;
+import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteBookDatabase;
 import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteCategoryDatabase;
+import renan.tsi.pro.br.keeptrackbooks.models.Book;
 import renan.tsi.pro.br.keeptrackbooks.models.Category;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,37 +29,44 @@ public class MainActivity extends AppCompatActivity {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        Category c1 = new Category("teste");
-        Category c2 = new Category("camaro");
+        //Category c1 = new Category("tedfd");
 
-        SQLiteCategoryDatabase db = new SQLiteCategoryDatabase(getApplicationContext());
+        Book b1 = new Book("teste", 25, 1);
+        Book b2 = new Book("camaro", 35, 1);
 
-        db.create(c1);
-        db.create(c2);
+        SQLiteBookDatabase db = new SQLiteBookDatabase(getApplicationContext());
+        //SQLiteCategoryDatabase db2 = new SQLiteCategoryDatabase(getApplicationContext());
+
+        //db2.create(c1);
+        //Log.d("PDMLog", "count categories: " + db2.count());
+
+        db.create(b1);
+        db.create(b2);
 
         Log.d("PDMLog","count:"+db.count());
 
-        Category vFromDb = db.find(2);
+        Book vFromDb = db.find(1);
 
         Log.d("PDMLog",vFromDb!=null?vFromDb.toString():"null");
 
-        db.update(new Category(1, "vw/audi"));
+        db.update(new Book(1, "vw/audi", 50, 2));
 
         System.out.println("---all:");
 
-        for(Category c : db.all()){
-            Log.d("PDMLog",c.toString());
+        for(Book b : db.all()){
+            Log.d("PDMLog",b.toString());
         }
 
-        System.out.println("---remove:"+c1);
-        db.delete(c1);
+        System.out.println("---remove:"+b1);
+        db.delete(b1);
 
-        for(Category c : db.all()){
-            Log.d("PDMLog",c.toString());
-            db.delete(c);
+        for(Book b : db.all()){
+            Log.d("PDMLog",b.toString());
+            db.delete(b);
         }
 
         Log.d("PDMLog","count:"+db.count());
+
     }
 
     @Override
