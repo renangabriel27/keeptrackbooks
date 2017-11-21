@@ -80,6 +80,7 @@ public class EditCategoryActivity extends MainActivity {
 
                     SQLiteCategoryDatabase db = new SQLiteCategoryDatabase(getApplicationContext());
                     db.update(category);
+                    Toast.makeText(getBaseContext(), "Category was updated with success!", Toast.LENGTH_LONG).show();
                     changeActivity(getBaseContext(), CategoriesActivity.class);
                 }
             }
@@ -96,9 +97,7 @@ public class EditCategoryActivity extends MainActivity {
 
                 SQLiteCategoryDatabase db = new SQLiteCategoryDatabase(getApplicationContext());
                 db.delete(categoryEdit);
-                //ListAdapter categoryAdapter = new CategoryAdapter(
-                       // (ArrayList<Category>) Category.all(getApplicationContext()), getLayoutInflater());
-                //categoryAdapter.remove(categoryEdit.getId());
+                Toast.makeText(getBaseContext(), "Category was deleted with success!", Toast.LENGTH_LONG).show();
                 changeActivity(getBaseContext(), CategoriesActivity.class);
             }
         });

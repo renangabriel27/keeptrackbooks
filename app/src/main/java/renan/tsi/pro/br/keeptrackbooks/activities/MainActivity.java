@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -80,6 +81,10 @@ public class MainActivity extends AppCompatActivity {
     protected void changeActivity(Context context, Class nameClass) {
         Intent intent = new Intent(context, nameClass);
         startActivity(intent);
+    }
+
+    protected boolean fieldIsEmpty(EditText text) {
+        return text.getText().toString().trim().equals("") || text.getText().toString().trim().equals("");
     }
 
 }

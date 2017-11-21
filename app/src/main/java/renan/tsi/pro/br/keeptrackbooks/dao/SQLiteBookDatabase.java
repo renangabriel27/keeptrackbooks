@@ -113,7 +113,8 @@ public class SQLiteBookDatabase extends SQLiteOpenHelper {
                 result.add(new Book(cursor.getInt(0),
                                     cursor.getString(1),
                                     cursor.getInt(2),
-                                    category));
+                                    category,
+                                    cursor.getInt(3)));
             } while (cursor.moveToNext());
         }
 

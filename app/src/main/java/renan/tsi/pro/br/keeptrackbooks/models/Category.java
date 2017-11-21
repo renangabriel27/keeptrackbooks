@@ -40,7 +40,7 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Nome: "+ name;
+        return name;
     }
 
     public static List<Category> all(Context context) {

@@ -27,12 +27,12 @@ public class Book {
         this.categoryId = categoryId;
     }
 
-    public Book(int _id, String title, int numberPages, Category category) {
+    public Book(int _id, String title, int numberPages, Category category, int categoryId) {
         this._id = _id;
         this.title = title;
         this.numberPages = numberPages;
         this.category = category;
-        this.categoryId = category.getId();
+        this.categoryId = categoryId;
     }
 
     public Book(String title, int numberPages, int categoryId) {
@@ -79,7 +79,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return title + " [" + numberPages + " pgs] - " + category.getName();
+        return title + " [" + numberPages + " pgs] - " + categoryId;
     }
 
     public static Book find(int id, Context context) {

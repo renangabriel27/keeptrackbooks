@@ -29,17 +29,15 @@ public class NewCategoryActivity extends MainActivity {
             public void onClick(View view) {
                 EditText c = (EditText) findViewById(R.id.editCategory);
 
-                if (c.getText().toString().trim().equals("") ||
-                        c.getText().toString().trim().equals("")){
-
+                if (fieldIsEmpty(c)){
                     Toast.makeText(getApplicationContext(), "The field can't be empty!", Toast.LENGTH_LONG).show();
-
                 } else {
 
                     Category category = new Category(c.getText().toString());
 
                     SQLiteCategoryDatabase db = new SQLiteCategoryDatabase(getApplicationContext());
                     db.create(category);
+                    Toast.makeText(getBaseContext(), "Category was created with success!", Toast.LENGTH_LONG).show();
                     changeActivity(getBaseContext(), CategoriesActivity.class);
                 }
             }
