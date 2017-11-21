@@ -4,22 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="renan.tsi.pro.br.keeptrackbooks.activities.NewCategoryActivity">
+    tools:context="renan.tsi.pro.br.keeptrackbooks.activities.EditCategoryActivity">
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Category"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="32dp"
+        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginTop="30dp"
+        android:text="Edit Category"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editCategory"
@@ -52,21 +52,38 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editCategory"
         app:layout_constraintVertical_bias="0.487"
-        tools:layout_editor_absoluteX="71dp">
+        tools:layout_editor_absoluteX="71dp"
+        android:id="@+id/linearLayout">
 
         <Button
-            android:id="@+id/backBtn"
+            android:id="@+id/backCategoriesBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="BACK" />
 
         <Button
-            android:id="@+id/createCategoryBtn"
+            android:id="@+id/updateCategoryBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="CREATE" />
+            android:text="UPDATE" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/deleteCategoryBtn"
+        android:layout_width="221dp"
+        android:layout_height="46dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:background="?attr/colorButtonNormal"
+        android:text="DELETE"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:layout_editor_absoluteX="79dp" />
+
 
 </android.support.constraint.ConstraintLayout>

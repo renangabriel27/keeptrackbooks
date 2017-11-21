@@ -47,7 +47,6 @@ public class CategoryAdapter extends BaseAdapter {
         return categories.get(i);
     }
 
-
     @Override
     public long getItemId(int i) {
         return categories.get(i).getId();
