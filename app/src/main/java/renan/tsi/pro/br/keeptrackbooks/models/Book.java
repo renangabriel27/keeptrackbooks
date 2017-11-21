@@ -1,5 +1,12 @@
 package renan.tsi.pro.br.keeptrackbooks.models;
 
+import android.content.Context;
+
+import java.util.List;
+
+import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteBookDatabase;
+import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteStatusDatabase;
+
 /**
  * Created by renan on 20/11/17.
  */
@@ -10,12 +17,22 @@ public class Book {
     private String title;
     private int numberPages;
     private int categoryId;
+    private Category category;
+    private static SQLiteBookDatabase dao;
 
     public Book(int _id, String title, int numberPages, int categoryId) {
         this._id = _id;
         this.title = title;
         this.numberPages = numberPages;
         this.categoryId = categoryId;
+    }
+
+    public Book(int _id, String title, int numberPages, Category category) {
+        this._id = _id;
+        this.title = title;
+        this.numberPages = numberPages;
+        this.category = category;
+        this.categoryId = category.getId();
     }
 
     public Book(String title, int numberPages, int categoryId) {
@@ -52,8 +69,26 @@ public class Book {
         this.categoryId = categoryId;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
-        return "Id: " + _id + " / Title: "+ title + " / Number of pages: " + numberPages + " / Category " + categoryId;
+        return title + " [" + numberPages + " pgs] - " + category.getName();
+    }
+
+    public static Book find(int id, Context context) {
+        dao = new SQLiteBookDatabase(context);
+        return dao.find(id);
+    }
+
+    public static List<Book> all(Context context) {
+        dao = new SQLiteBookDatabase(context);
+        return dao.all();
     }
 }

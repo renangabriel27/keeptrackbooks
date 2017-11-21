@@ -1,21 +1,39 @@
 package renan.tsi.pro.br.keeptrackbooks.models;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
+
+import java.util.List;
+
+import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteStatusDatabase;
+
 /**
  * Created by renan on 20/11/17.
  */
 
-public class Status {
+public class Status extends Application {
 
     private int _id;
+    private Book book;
     private int bookId;
     private int status;
     private String notes;
+    private static SQLiteStatusDatabase dao;
 
     public Status(int _id, int bookId, int status, String notes) {
         this._id = _id;
         this.bookId = bookId;
         this.status = status;
         this.notes = notes;
+    }
+
+    public Status(int _id, Book book, int status, String notes) {
+        this._id = _id;
+        this.book = book;
+        this.status = status;
+        this.notes = notes;
+        this.bookId = book.getId();
     }
 
     public Status(int bookId, int status, String notes) {
@@ -36,6 +54,14 @@ public class Status {
         this.bookId = bookId;
     }
 
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -54,6 +80,11 @@ public class Status {
 
     @Override
     public String toString() {
-        return "Title: "+ bookId+ " / STATUS: " + status ;
+        return "Book["+ book.getTitle() + "] Status[" + status + "]" ;
+    }
+
+    public static List<Status> all(Context context) {
+        dao = new SQLiteStatusDatabase(context);
+        return dao.all();
     }
 }

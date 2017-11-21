@@ -17,9 +17,11 @@ public class SQLiteBookDatabase extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "keeptrackbooks";
     private static final int DATABASE_VERSION = 2;
+    private static Context ctx;
 
     public SQLiteBookDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.ctx = context;
     }
 
     @Override
@@ -100,16 +102,18 @@ public class SQLiteBookDatabase extends SQLiteOpenHelper {
 
     public List<Book> all() {
         List<Book> result = new ArrayList<Book>();
+        SQLiteCategoryDatabase dbCategory = new SQLiteCategoryDatabase(this.ctx);
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT  * FROM books", null);
 
         if (cursor.moveToFirst()) {
             do {
+                Category category = dbCategory.find(cursor.getInt(3));
                 result.add(new Book(cursor.getInt(0),
                                     cursor.getString(1),
                                     cursor.getInt(2),
-                                    cursor.getInt(3)));
+                                    category));
             } while (cursor.moveToNext());
         }
 

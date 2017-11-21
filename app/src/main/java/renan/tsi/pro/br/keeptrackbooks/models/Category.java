@@ -1,5 +1,12 @@
 package renan.tsi.pro.br.keeptrackbooks.models;
 
+import android.content.Context;
+
+import java.util.List;
+
+import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteBookDatabase;
+import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteCategoryDatabase;
+
 /**
  * Created by renan on 20/11/17.
  */
@@ -8,6 +15,7 @@ public class Category {
 
     private String name;
     private int _id;
+    private static SQLiteCategoryDatabase dao;
 
     public Category(String name) {
         this.name = name;
@@ -32,6 +40,11 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Id: " + _id + " / Nome: "+ name;
+        return "Nome: "+ name;
+    }
+
+    public static List<Category> all(Context context) {
+        dao = new SQLiteCategoryDatabase(context);
+        return dao.all();
     }
 }

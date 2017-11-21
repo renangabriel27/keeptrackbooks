@@ -18,9 +18,11 @@ public class SQLiteStatusDatabase extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "keeptrackbooks";
     private static final int DATABASE_VERSION = 2;
+    private Context ctx;
 
     public SQLiteStatusDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.ctx = context;
     }
 
     @Override
@@ -100,6 +102,9 @@ public class SQLiteStatusDatabase extends SQLiteOpenHelper {
     }
 
     public List<Status> all() {
+        SQLiteBookDatabase dbBook = new SQLiteBookDatabase(this.ctx);
+
+
         List<Status> result = new ArrayList<Status>();
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -107,8 +112,9 @@ public class SQLiteStatusDatabase extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
+                Book book = dbBook.find(cursor.getInt(1));
                 result.add(new Status(cursor.getInt(0),
-                                      cursor.getInt(1),
+                                      book,
                                       cursor.getInt(2),
                                       cursor.getString(3)));
             } while (cursor.moveToNext());

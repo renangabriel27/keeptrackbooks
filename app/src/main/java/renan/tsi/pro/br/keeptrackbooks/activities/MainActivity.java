@@ -39,9 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
         ListView lv = (ListView) findViewById(R.id.statusListView);
 
-        SQLiteStatusDatabase db = new SQLiteStatusDatabase(getApplicationContext());
-
-        ListAdapter statusAdapter = new StatusAdapter((ArrayList<Status>) db.all(), getLayoutInflater());
+        ListAdapter statusAdapter = new StatusAdapter(
+                (ArrayList<Status>) Status.all(getApplicationContext()), getLayoutInflater());
         lv.setAdapter(statusAdapter);
     }
 
