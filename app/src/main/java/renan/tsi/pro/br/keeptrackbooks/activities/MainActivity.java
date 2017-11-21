@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -11,9 +12,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import renan.tsi.pro.br.keeptrackbooks.R;
+import renan.tsi.pro.br.keeptrackbooks.adapters.StatusAdapter;
 import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteBookDatabase;
 import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteCategoryDatabase;
 import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteStatusDatabase;
@@ -30,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+
+        ListView lv = (ListView) findViewById(R.id.statusListView);
+
+        SQLiteStatusDatabase db = new SQLiteStatusDatabase(getApplicationContext());
+
+        ListAdapter statusAdapter = new StatusAdapter((ArrayList<Status>) db.all(), getLayoutInflater());
+        lv.setAdapter(statusAdapter);
     }
 
     @Override

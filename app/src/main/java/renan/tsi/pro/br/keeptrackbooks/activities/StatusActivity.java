@@ -12,20 +12,9 @@ public class StatusActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_status);
+        setContentView(R.layout.activity_main);
 
         changeToMain();
-        changeToNewStatus();
     }
 
-    private void changeToNewStatus() {
-        Button newStatusBtn = (Button) findViewById(R.id.newStatusBtn);
-
-        newStatusBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeActivity(getBaseContext(), NewStatusActivity.class);
-            }
-        });
-    }
 }

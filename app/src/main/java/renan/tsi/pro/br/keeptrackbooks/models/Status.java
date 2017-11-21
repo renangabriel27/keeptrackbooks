@@ -54,6 +54,6 @@ public class Status {
 
     @Override
     public String toString() {
-        return "Id: " + _id + " / Book id: "+ bookId+ " / Status: " + status + " / Notes " + notes;
+        return "Title: "+ bookId+ " / STATUS: " + status ;
     }
 }
