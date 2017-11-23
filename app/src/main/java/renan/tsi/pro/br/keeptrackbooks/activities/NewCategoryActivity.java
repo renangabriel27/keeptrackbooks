@@ -21,24 +21,29 @@ public class NewCategoryActivity extends MainActivity {
         saveCategory();
     }
 
+    private void createCategory(EditText nameCategory) {
+        SQLiteCategoryDatabase db = new SQLiteCategoryDatabase(getApplicationContext());
+
+        Category category = new Category(nameCategory.getText().toString());
+
+        db.create(category);
+
+        Toast.makeText(getBaseContext(), "Category was created with success!", Toast.LENGTH_LONG).show();
+        changeActivity(getBaseContext(), CategoriesActivity.class);
+    }
+
     protected void saveCategory() {
-        Button createCategoryBtn = (Button) findViewById(R.id.createCategoryBtn);
+        final Button createCategoryBtn = (Button) findViewById(R.id.createCategoryBtn);
 
         createCategoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText c = (EditText) findViewById(R.id.editCategory);
+                EditText nameCategory = (EditText) findViewById(R.id.editCategory);
 
-                if (fieldIsEmpty(c)){
+                if (fieldIsEmpty(nameCategory)){
                     Toast.makeText(getApplicationContext(), "The field can't be empty!", Toast.LENGTH_LONG).show();
                 } else {
-
-                    Category category = new Category(c.getText().toString());
-
-                    SQLiteCategoryDatabase db = new SQLiteCategoryDatabase(getApplicationContext());
-                    db.create(category);
-                    Toast.makeText(getBaseContext(), "Category was created with success!", Toast.LENGTH_LONG).show();
-                    changeActivity(getBaseContext(), CategoriesActivity.class);
+                    createCategory(nameCategory);
                 }
             }
         });

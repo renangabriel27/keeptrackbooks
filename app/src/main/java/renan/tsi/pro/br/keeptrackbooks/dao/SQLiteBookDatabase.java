@@ -60,16 +60,18 @@ public class SQLiteBookDatabase extends SQLiteOpenHelper {
 
     public Book find(int id) {
         Book result = null;
-
+        SQLiteCategoryDatabase dbCategory = new SQLiteCategoryDatabase(this.ctx);
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query("books", new String[] { "id", "title", "number_pages", "category_id" }, "id=?",
                 new String[] { String.valueOf(id) }, null, null, null);
 
         if (cursor != null && cursor.moveToFirst()) {
+            Category category = dbCategory.find(cursor.getInt(3));
             result = new Book(cursor.getInt(0),
                                   cursor.getString(1),
                                   cursor.getInt(2),
+                                  category,
                                   cursor.getInt(3));
         }
 

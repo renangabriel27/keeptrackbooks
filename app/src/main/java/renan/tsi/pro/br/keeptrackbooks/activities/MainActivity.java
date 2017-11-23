@@ -35,14 +35,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        changeToNewStatus();
+        initComponentsForMain();
+    }
+
+    public void initComponentsForMain() {
+        setToolbar();
+        setListView();
+    }
+
+    public void setToolbar() {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-
-        ListView lv = (ListView) findViewById(R.id.statusListView);
-
-        ListAdapter statusAdapter = new StatusAdapter(
-                (ArrayList<Status>) Status.all(getApplicationContext()), getLayoutInflater());
-        lv.setAdapter(statusAdapter);
     }
 
     @Override
@@ -87,4 +91,21 @@ public class MainActivity extends AppCompatActivity {
         return text.getText().toString().trim().equals("") || text.getText().toString().trim().equals("");
     }
 
+    private void changeToNewStatus() {
+        Button newStatusBtn = (Button) findViewById(R.id.newStatusBtn);
+
+        newStatusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeActivity(getBaseContext(), NewStatusActivity.class);
+            }
+        });
+    }
+
+    private void setListView() {
+        ListView lv = (ListView) findViewById(R.id.statusListView);
+        ListAdapter statusAdapter = new StatusAdapter(
+                (ArrayList<Status>) Status.all(getApplicationContext()), getLayoutInflater());
+        lv.setAdapter(statusAdapter);
+    }
 }

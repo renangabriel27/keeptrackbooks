@@ -24,7 +24,18 @@ public class CategoriesActivity extends MainActivity {
 
         changeToMain();
         changeToNewCategory();
+        setListView();
+    }
 
+    private void sendCategoryIdWhenChangeActivity(ListAdapter categoryAdapter, int position) {
+        Bundle params = new Bundle();
+        params.putLong("id", categoryAdapter.getItemId(position));
+        Intent intent = new Intent(getBaseContext(), EditCategoryActivity.class);
+        intent.putExtras(params);
+        startActivity(intent);
+    }
+
+    private void setListView() {
         ListView lv = (ListView) findViewById(R.id.categoriesListView);
 
         final ListAdapter categoryAdapter = new CategoryAdapter(
@@ -35,12 +46,7 @@ public class CategoriesActivity extends MainActivity {
             @Override
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Bundle params = new Bundle();
-                params.putLong("id", categoryAdapter.getItemId(position));
-                Intent intent = new Intent(getBaseContext(), EditCategoryActivity.class);
-                intent.putExtras(params);
-                startActivity(intent);
+            sendCategoryIdWhenChangeActivity(categoryAdapter, position);
             }
         });
     }

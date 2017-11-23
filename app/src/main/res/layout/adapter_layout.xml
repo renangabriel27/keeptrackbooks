@@ -6,11 +6,17 @@
     android:layout_height="wrap_content">
 
     <TableRow>
+
         <TextView
+            android:id="@+id/adapter_text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/adapter_text1"
-            android:text="text1">
+            android:fontFamily="sans-serif"
+            android:text="text1"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="?attr/actionMenuTextColor"
+            android:textSize="24sp">
 
         </TextView>
     </TableRow>

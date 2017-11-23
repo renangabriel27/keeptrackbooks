@@ -31,6 +31,12 @@ public class EditCategoryActivity extends MainActivity {
 
         changeToCategories();
 
+        setEditTextForCategory();
+        updateCategory();
+        deleteCategory();
+    }
+
+    private void setEditTextForCategory() {
         Intent intent = getIntent();
         Bundle params = intent.getExtras();
 
@@ -45,9 +51,6 @@ public class EditCategoryActivity extends MainActivity {
 
         EditText editCategoryText = (EditText) findViewById(R.id.editCategory);
         editCategoryText.setText(categoryEdit.getName());
-
-        updateCategory();
-        deleteCategory();
     }
 
     protected void changeToCategories() {

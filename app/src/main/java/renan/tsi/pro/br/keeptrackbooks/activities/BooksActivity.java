@@ -27,7 +27,18 @@ public class BooksActivity extends MainActivity {
 
         changeToMain();
         changeToNewBook();
+        setListView();
+    }
 
+    private void sendBookIdWhenChangeActivity(ListAdapter bookAdapter, int position) {
+        Bundle params = new Bundle();
+        params.putLong("id", bookAdapter.getItemId(position));
+        Intent intent = new Intent(getBaseContext(), EditBookActivity.class);
+        intent.putExtras(params);
+        startActivity(intent);
+    }
+
+    private void setListView() {
         ListView lv = (ListView) findViewById(R.id.booksListView);
 
         final ListAdapter bookAdapter = new BookAdapter(
@@ -38,11 +49,7 @@ public class BooksActivity extends MainActivity {
             @Override
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Bundle params = new Bundle();
-                params.putLong("id", bookAdapter.getItemId(position));
-                Intent intent = new Intent(getBaseContext(), EditBookActivity.class);
-                intent.putExtras(params);
-                startActivity(intent);
+                sendBookIdWhenChangeActivity(bookAdapter, position);
             }
         });
     }
