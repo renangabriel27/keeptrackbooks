@@ -1,7 +1,6 @@
 package renan.tsi.pro.br.keeptrackbooks.activities;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 
 import renan.tsi.pro.br.keeptrackbooks.R;
 import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteBookDatabase;
-import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteCategoryDatabase;
 import renan.tsi.pro.br.keeptrackbooks.models.Book;
 import renan.tsi.pro.br.keeptrackbooks.models.Category;
 
@@ -74,7 +72,7 @@ public class EditBookActivity extends BooksActivity {
     }
 
     protected void changeToBooks() {
-        ImageButton backBooksBtn = (ImageButton) findViewById(R.id.backBooksBtn);
+        ImageButton backBooksBtn = (ImageButton) findViewById(R.id.backBtn);
 
         backBooksBtn.setOnClickListener(new View.OnClickListener() {
             @Override

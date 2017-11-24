@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -116,10 +117,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void sendStatusIdWhenChangeActivity(ListAdapter statusAdapter, int position) {
+        Bundle params = new Bundle();
+        params.putLong("id", statusAdapter.getItemId(position));
+        Intent intent = new Intent(getBaseContext(), EditStatusActivity.class);
+        intent.putExtras(params);
+        startActivity(intent);
+    }
+
     private void setListView() {
         ListView lv = (ListView) findViewById(R.id.statusListView);
-        ListAdapter statusAdapter = new StatusAdapter(
+        final ListAdapter statusAdapter = new StatusAdapter(
                 (ArrayList<Status>) Status.all(getApplicationContext()), getLayoutInflater());
         lv.setAdapter(statusAdapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                sendStatusIdWhenChangeActivity(statusAdapter, position);
+            }
+        });
     }
 }

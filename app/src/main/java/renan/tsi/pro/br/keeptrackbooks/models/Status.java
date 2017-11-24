@@ -36,6 +36,12 @@ public class Status extends Application {
         //this.bookId = book.getId();
     }
 
+    public Status(Book book, int status, String notes) {
+        this.book = book;
+        this.status = status;
+        this.notes = notes;
+    }
+
     public Status(int bookId, int status, String notes) {
         this.bookId = bookId;
         this.status = status;

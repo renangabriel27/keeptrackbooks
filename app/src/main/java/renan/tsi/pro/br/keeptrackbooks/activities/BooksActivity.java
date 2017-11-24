@@ -28,18 +28,9 @@ public class BooksActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_books);
 
-        //changeToMain();
+        changeToMain();
         changeToNewBook();
         setListView();
-
-        ImageButton backBtn = (ImageButton) findViewById(R.id.backBtn);
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeActivity(getBaseContext(), MainActivity.class);
-            }
-        });
     }
 
     protected void setAutoCompleteForCategory() {
