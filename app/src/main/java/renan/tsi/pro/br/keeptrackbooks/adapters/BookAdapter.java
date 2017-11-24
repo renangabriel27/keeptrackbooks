@@ -58,9 +58,10 @@ public class BookAdapter extends BaseAdapter {
         Log.d("PDM","VIEW"+books.size());
         Book b = books.get(i);
 
-        View v = inflater.inflate(R.layout.adapter_layout, null);
+        View v = inflater.inflate(R.layout.adapter_book_layout, null);
 
-        ((TextView)v.findViewById(R.id.adapter_text1)).setText(b.toString());
+        ((TextView)v.findViewById(R.id.adapter_text1)).setText(b.getTitle());
+        ((TextView)v.findViewById(R.id.adapter_text2)).setText(String.valueOf(b.getNumberPages()) + " pages");
 
         return v;
     }

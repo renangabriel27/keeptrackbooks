@@ -33,7 +33,7 @@ public class Status extends Application {
         this.book = book;
         this.status = status;
         this.notes = notes;
-        this.bookId = book.getId();
+        //this.bookId = book.getId();
     }
 
     public Status(int bookId, int status, String notes) {
@@ -80,7 +80,7 @@ public class Status extends Application {
 
     @Override
     public String toString() {
-        return "Book["+ book.getTitle() + "] Status[" + status + "]" ;
+        return "Status[" + status + "]" ;
     }
 
     public static List<Status> all(Context context) {

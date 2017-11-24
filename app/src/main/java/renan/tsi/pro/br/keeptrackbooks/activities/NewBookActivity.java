@@ -17,9 +17,7 @@ import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteBookDatabase;
 import renan.tsi.pro.br.keeptrackbooks.models.Book;
 import renan.tsi.pro.br.keeptrackbooks.models.Category;
 
-public class NewBookActivity extends MainActivity {
-
-    private int idCategory;
+public class NewBookActivity extends BooksActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,37 +27,6 @@ public class NewBookActivity extends MainActivity {
         changeToMain();
         saveBook();
         setAutoCompleteForCategory();
-    }
-
-    private void setAutoCompleteForCategory() {
-        final ArrayAdapter<Category> catAdapter = new ArrayAdapter<Category>(this,
-                android.R.layout.simple_dropdown_item_1line, getCategories());
-
-        AutoCompleteTextView textView = (AutoCompleteTextView)
-                findViewById(R.id.selectEditCategory);
-
-        textView.setAdapter(catAdapter);
-        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                setIdForCategory(catAdapter.getItem(position).getId());
-            }
-        });
-    }
-
-    private ArrayList<Category> getCategories() {
-        ArrayList<Category> c = new ArrayList<Category>();
-
-        for(Category category : Category.all(getApplicationContext())){
-            c.add(category);
-        }
-
-        return  c;
-    }
-
-    private void setIdForCategory(int id) {
-        this.idCategory = id;
     }
 
     private void createBook(EditText nameBook, EditText numberPages) {
