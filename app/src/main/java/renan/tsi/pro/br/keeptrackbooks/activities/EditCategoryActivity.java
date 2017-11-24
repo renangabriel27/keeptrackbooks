@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
@@ -54,7 +55,7 @@ public class EditCategoryActivity extends MainActivity {
     }
 
     protected void changeToCategories() {
-        Button backCategoriesBtn = (Button) findViewById(R.id.backCategoriesBtn);
+        ImageButton backCategoriesBtn = (ImageButton) findViewById(R.id.backCategoriesBtn);
 
         backCategoriesBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -14,7 +14,7 @@ public class NewStatusActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_status);
 
-        changeToMain();
+        backToMain();
     }
 
 

@@ -2,6 +2,7 @@ package renan.tsi.pro.br.keeptrackbooks.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +14,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.nio.InvalidMarkException;
 import java.util.ArrayList;
 
 import renan.tsi.pro.br.keeptrackbooks.R;
@@ -72,7 +75,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void changeToMain() {
-        Button backBtn = (Button) findViewById(R.id.backBtn);
+        ImageButton backBtn = (ImageButton) findViewById(R.id.backBtn);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeActivity(getBaseContext(), MainActivity.class);
+            }
+        });
+    }
+
+    protected void backToMain() {
+        ImageButton backBtn = (ImageButton) findViewById(R.id.backBtn);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeToNewStatus() {
-        Button newStatusBtn = (Button) findViewById(R.id.newStatusBtn);
+        ImageButton newStatusBtn = (ImageButton) findViewById(R.id.newStatusBtn);
 
         newStatusBtn.setOnClickListener(new View.OnClickListener() {
             @Override

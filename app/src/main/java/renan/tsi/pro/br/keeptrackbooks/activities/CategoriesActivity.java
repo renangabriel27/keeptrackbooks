@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -22,7 +23,7 @@ public class CategoriesActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
-        changeToMain();
+        backToMain();
         changeToNewCategory();
         setListView();
     }
@@ -52,7 +53,7 @@ public class CategoriesActivity extends MainActivity {
     }
 
     private void changeToNewCategory() {
-        Button newCategoryBtn = (Button) findViewById(R.id.newCategoryBtn);
+        ImageButton newCategoryBtn = (ImageButton) findViewById(R.id.newCategoryBtn);
 
         newCategoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override

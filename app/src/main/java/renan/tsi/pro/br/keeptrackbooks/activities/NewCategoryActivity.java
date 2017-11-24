@@ -17,7 +17,7 @@ public class NewCategoryActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_category);
 
-        changeToMain();
+        backToMain();
         saveCategory();
     }
 

@@ -7,9 +7,22 @@
     tools:context="renan.tsi.pro.br.keeptrackbooks.activities.EditBookActivity">
 
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="0dp" />
+
     <EditText
         android:id="@+id/editBookTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
@@ -24,29 +37,45 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <TextView
-        android:id="@+id/textView3"
+    <ImageButton
+        android:id="@+id/backBooksBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@android:color/transparent"
+        android:tint="@android:color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_action_back_light" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="6dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginRight="6dp"
         android:layout_marginStart="8dp"
         android:text="Edit book"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="32dp" />
+        app:layout_constraintLeft_toRightOf="@+id/backBooksBtn"
+        android:layout_marginLeft="32dp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp" />
 
     <AutoCompleteTextView
         android:id="@+id/selectEditCategory"
-        android:layout_width="218dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="5dp"
         android:hint="Category"
         app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -55,13 +84,13 @@
 
     <EditText
         android:id="@+id/editNumberPages"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
         android:ems="10"
         android:hint="Number pages"
         android:inputType="number"
@@ -72,44 +101,34 @@
 
     <Button
         android:id="@+id/deleteBookBtn"
-        android:layout_width="210dp"
+        android:layout_width="0dp"
         android:layout_height="47dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@android:color/holo_red_light"
+        android:text="DELETE"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/updateBookBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="0dp"
-        android:text="DELETE"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/colorPrimary"
+        android:text="UPDATE"
+        android:textColor="@android:color/white"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="200dp"
-        android:layout_height="51dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="111dp"
-        android:orientation="horizontal"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectEditCategory">
-
-        <Button
-            android:id="@+id/backBooksBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="BACK" />
-
-        <Button
-            android:id="@+id/updateBookBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="UPDATE" />
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/selectEditCategory"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/deleteBookBtn" />
 
 </android.support.constraint.ConstraintLayout>

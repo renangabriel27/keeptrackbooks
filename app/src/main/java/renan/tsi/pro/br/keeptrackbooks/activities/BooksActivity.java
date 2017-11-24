@@ -32,9 +32,6 @@ public class BooksActivity extends MainActivity {
         changeToNewBook();
         setListView();
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-
         ImageButton backBtn = (ImageButton) findViewById(R.id.backBtn);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -92,12 +89,10 @@ public class BooksActivity extends MainActivity {
         lv.setAdapter(bookAdapter);
 
         lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("TESTE", "" + position);
                 sendBookIdWhenChangeActivity(bookAdapter, position);
             }
         });

@@ -1,6 +1,7 @@
 package renan.tsi.pro.br.keeptrackbooks.activities;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import renan.tsi.pro.br.keeptrackbooks.R;
@@ -72,7 +74,7 @@ public class EditBookActivity extends BooksActivity {
     }
 
     protected void changeToBooks() {
-        Button backBooksBtn = (Button) findViewById(R.id.backBooksBtn);
+        ImageButton backBooksBtn = (ImageButton) findViewById(R.id.backBooksBtn);
 
         backBooksBtn.setOnClickListener(new View.OnClickListener() {
             @Override

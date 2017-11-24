@@ -24,7 +24,7 @@ public class NewBookActivity extends BooksActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_book);
 
-        changeToMain();
+        backToMain();
         saveBook();
         setAutoCompleteForCategory();
     }
