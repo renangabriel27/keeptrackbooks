@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import renan.tsi.pro.br.keeptrackbooks.R;
 import renan.tsi.pro.br.keeptrackbooks.adapters.BookAdapter;
+import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteBookDatabase;
 import renan.tsi.pro.br.keeptrackbooks.models.Book;
 import renan.tsi.pro.br.keeptrackbooks.models.Category;
 
@@ -79,7 +80,6 @@ public class BooksActivity extends MainActivity {
                 (ArrayList<Book>) Book.all(getApplicationContext()), getLayoutInflater());
         lv.setAdapter(bookAdapter);
 
-        lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
 

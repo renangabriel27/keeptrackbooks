@@ -14,8 +14,8 @@ import renan.tsi.pro.br.keeptrackbooks.models.Category;
 
 public class SQLiteCategoryDatabase extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "keeptrackbooks";
-    private static final int DATABASE_VERSION = 2;
+    private static final String DATABASE_NAME = "keeptrackbook";
+    private static final int DATABASE_VERSION = 4;
 
     public SQLiteCategoryDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -89,6 +89,7 @@ public class SQLiteCategoryDatabase extends SQLiteOpenHelper {
         List<Category> result = new ArrayList<Category>();
 
         SQLiteDatabase db = this.getReadableDatabase();
+
         Cursor cursor = db.rawQuery("SELECT  * FROM categories", null);
 
         if (cursor.moveToFirst()) {

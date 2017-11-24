@@ -59,9 +59,11 @@ public class StatusAdapter extends BaseAdapter {
         Log.d("PDM","VIEW"+status.size());
         Status s = status.get(i);
 
-        View v = inflater.inflate(R.layout.adapter_layout, null);
+        View v = inflater.inflate(R.layout.adapter_status_layout, null);
 
-        ((TextView)v.findViewById(R.id.adapter_text1)).setText(s.toString());
+        ((TextView)v.findViewById(R.id.bookText)).setText(s.getBook().getTitle());
+        ((TextView)v.findViewById(R.id.statusText)).setText(s.getStatusFormated(s.getStatus()));
+        ((TextView)v.findViewById(R.id.notesText)).setText(s.getNotes());
 
         return v;
     }

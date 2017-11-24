@@ -28,18 +28,19 @@ public class Status extends Application {
         this.notes = notes;
     }
 
-    public Status(int _id, Book book, int status, String notes) {
+    public Status(int _id, Book book, int status, String notes, int bookId) {
         this._id = _id;
         this.book = book;
         this.status = status;
         this.notes = notes;
-        //this.bookId = book.getId();
+        this.bookId = bookId;
     }
 
-    public Status(Book book, int status, String notes) {
+    public Status(Book book, int status, String notes, int bookId) {
         this.book = book;
         this.status = status;
         this.notes = notes;
+        this.bookId = bookId;
     }
 
     public Status(int bookId, int status, String notes) {
@@ -84,9 +85,16 @@ public class Status extends Application {
         this.notes = notes;
     }
 
+    public String getStatusFormated(int status) {
+        if(status == 1) {
+            return "Done";
+        }
+        return "In progress";
+    }
+
     @Override
     public String toString() {
-        return "Status[" + status + "]" ;
+        return "Book " + book.getTitle() + " Status[" + getStatusFormated(status) + "]" + notes ;
     }
 
     public static List<Status> all(Context context) {

@@ -2,6 +2,7 @@ package renan.tsi.pro.br.keeptrackbooks.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
         changeToNewStatus();
         initComponentsForMain();
+
+
+
     }
 
     public void initComponentsForMain() {
@@ -130,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         final ListAdapter statusAdapter = new StatusAdapter(
                 (ArrayList<Status>) Status.all(getApplicationContext()), getLayoutInflater());
         lv.setAdapter(statusAdapter);
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
 

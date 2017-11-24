@@ -16,8 +16,8 @@ import renan.tsi.pro.br.keeptrackbooks.models.Status;
 
 public class SQLiteStatusDatabase extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "keeptrackbooks";
-    private static final int DATABASE_VERSION = 2;
+    private static final String DATABASE_NAME = "keeptrackbook";
+    private static final int DATABASE_VERSION = 4;
     private Context ctx;
 
     public SQLiteStatusDatabase(Context context) {
@@ -108,15 +108,18 @@ public class SQLiteStatusDatabase extends SQLiteOpenHelper {
         List<Status> result = new ArrayList<Status>();
 
         SQLiteDatabase db = this.getReadableDatabase();
+
         Cursor cursor = db.rawQuery("SELECT  * FROM status", null);
 
         if (cursor.moveToFirst()) {
             do {
                 Book book = dbBook.find(cursor.getInt(1));
+
                 result.add(new Status(cursor.getInt(0),
                                       book,
                                       cursor.getInt(2),
-                                      cursor.getString(3)));
+                                      cursor.getString(3),
+                                      cursor.getInt(1)));
             } while (cursor.moveToNext());
         }
 

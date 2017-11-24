@@ -89,9 +89,9 @@ public class NewStatusActivity extends MainActivity {
                     Status status;
 
                     if(finishedIsChecked) {
-                        status = new Status(b, 1, statusNotes);
+                        status = new Status(b, 1, statusNotes, idBook);
                     } else {
-                        status = new Status(b, 0, statusNotes);
+                        status = new Status(b, 0, statusNotes, idBook);
                     }
 
                     SQLiteStatusDatabase db = new SQLiteStatusDatabase(getApplicationContext());

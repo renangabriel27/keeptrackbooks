@@ -14,15 +14,19 @@ import java.util.ArrayList;
 
 import renan.tsi.pro.br.keeptrackbooks.R;
 import renan.tsi.pro.br.keeptrackbooks.adapters.CategoryAdapter;
+import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteCategoryDatabase;
 import renan.tsi.pro.br.keeptrackbooks.models.Category;
 
 public class CategoriesActivity extends MainActivity {
+
+    private SQLiteCategoryDatabase dbCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
+        dbCategory = new SQLiteCategoryDatabase(getApplicationContext());
         backToMain();
         changeToNewCategory();
         setListView();
@@ -40,7 +44,7 @@ public class CategoriesActivity extends MainActivity {
         ListView lv = (ListView) findViewById(R.id.categoriesListView);
 
         final ListAdapter categoryAdapter = new CategoryAdapter(
-                (ArrayList<Category>) Category.all(getApplicationContext()), getLayoutInflater());
+                (ArrayList<Category>) dbCategory.all(), getLayoutInflater());
         lv.setAdapter(categoryAdapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

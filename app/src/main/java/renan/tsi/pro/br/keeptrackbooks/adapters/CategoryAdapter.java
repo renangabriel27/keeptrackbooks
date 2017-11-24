@@ -57,9 +57,9 @@ public class CategoryAdapter extends BaseAdapter {
         Log.d("PDM","VIEW"+categories.size());
         Category c = categories.get(i);
 
-        View v = inflater.inflate(R.layout.adapter_layout, null);
+        View v = inflater.inflate(R.layout.adapter_category_layout, null);
 
-        ((TextView)v.findViewById(R.id.adapter_text1)).setText(c.toString());
+        ((TextView)v.findViewById(R.id.categoryText)).setText(c.toString());
 
         return v;
     }
