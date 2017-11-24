@@ -65,6 +65,8 @@ public class BooksActivity extends MainActivity {
         this.idCategory = id;
     }
 
+    protected  int getIdCategory() { return this.idCategory; }
+
     private void sendBookIdWhenChangeActivity(ListAdapter bookAdapter, int position) {
         Bundle params = new Bundle();
         params.putLong("id", bookAdapter.getItemId(position));

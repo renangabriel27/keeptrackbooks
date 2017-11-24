@@ -21,6 +21,7 @@ public class EditBookActivity extends BooksActivity {
 
     private long id;
     private Book bookEdit;
+    private ArrayAdapter<Category> catAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class EditBookActivity extends BooksActivity {
 
         editCategoryBook.setText(bookEdit.getCategory().getName());
 
-        final ArrayAdapter<Category> catAdapter = new ArrayAdapter<Category>(this,
+        catAdapter = new ArrayAdapter<Category>(this,
                 android.R.layout.simple_dropdown_item_1line, getCategories());
 
         editCategoryBook.setAdapter(catAdapter);
@@ -111,9 +112,23 @@ public class EditBookActivity extends BooksActivity {
 
                 if (fieldIsEmpty(nameBook) || fieldIsEmpty(numberPages) || fieldIsEmpty(numberPages)){
                     Toast.makeText(getApplicationContext(), "The field can't be empty!", Toast.LENGTH_LONG).show();
-                } else if(idCategory == 0) {
-                    Toast.makeText(getApplicationContext(), "Invalid category!", Toast.LENGTH_LONG).show();
-                    Log.d("TESTE", "" + idCategory);
+                } else if(getIdCategory() == 0) {
+                    String bookName = nameBook.getText().toString();
+                    int bookNumberPages = 0;
+
+                    try {
+                        bookNumberPages = Integer.parseInt(numberPages.getText().toString());
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    Book book = new Book((int) id, bookName, bookNumberPages, bookEdit.getCategory().getId());
+
+                    SQLiteBookDatabase db = new SQLiteBookDatabase(getApplicationContext());
+                    db.update(book);
+
+                    Toast.makeText(getBaseContext(), "Book was updated with success!", Toast.LENGTH_LONG).show();
+                    changeActivity(getBaseContext(), BooksActivity.class);
                 } else {
                     String bookName = nameBook.getText().toString();
                     int bookNumberPages = 0;
