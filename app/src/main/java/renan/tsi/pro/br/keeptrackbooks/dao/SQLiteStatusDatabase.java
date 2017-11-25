@@ -60,6 +60,8 @@ public class SQLiteStatusDatabase extends SQLiteOpenHelper {
     }
 
     public Status find(int id) {
+        SQLiteBookDatabase dbBook = new SQLiteBookDatabase(this.ctx);
+
         Status result = null;
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -68,10 +70,13 @@ public class SQLiteStatusDatabase extends SQLiteOpenHelper {
                 new String[] { String.valueOf(id) }, null, null, null);
 
         if (cursor != null && cursor.moveToFirst()) {
+            Book book = dbBook.find(cursor.getInt(1));
+
             result = new Status(cursor.getInt(0),
-                                cursor.getInt(1),
+                                book,
                                 cursor.getInt(2),
-                                cursor.getString(3));
+                                cursor.getString(3),
+                                cursor.getInt(1));
         }
 
         db.close();

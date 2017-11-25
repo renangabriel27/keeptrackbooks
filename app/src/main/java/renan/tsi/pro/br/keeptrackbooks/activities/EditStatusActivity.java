@@ -36,6 +36,7 @@ public class EditStatusActivity extends MainActivity {
         changeToMain();
         setFieldsForStatus();
         deleteStatus();
+        updateStatus();
     }
 
     private void setFieldsForStatus() {
@@ -54,13 +55,15 @@ public class EditStatusActivity extends MainActivity {
         EditText editNotes = (EditText) findViewById(R.id.editNotes);
         editNotes.setText(statusEdit.getNotes());
 
-        //CheckBox editFinished = (CheckBox) findViewById(R.id.editFinished);
-        //editFinished.set(String.valueOf(bookEdit.getNumberPages()));
+        CheckBox editFinished = (CheckBox) findViewById(R.id.editFinished);
+
+        if(statusEdit.getStatus() == 1)
+          editFinished.setChecked(true);
 
         AutoCompleteTextView editSelectedBook = (AutoCompleteTextView)
                 findViewById(R.id.selectEditBook);
 
-        //editSelectedBook.setText(statusEdit.getBook().getTitle());
+        editSelectedBook.setText(statusEdit.getBook().getTitle());
 
         final ArrayAdapter<Book> statusAdapter = new ArrayAdapter<Book>(this,
                 android.R.layout.simple_dropdown_item_1line, getBooks());
@@ -86,6 +89,64 @@ public class EditStatusActivity extends MainActivity {
     }
     protected void setIdForStatus(int id) {
         this.idStatus = id;
+    }
+
+    protected void updateStatus() {
+        Button updateStatusBtn = (Button) findViewById(R.id.updateStatusBtn);
+
+        updateStatusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AutoCompleteTextView selectEditBook = (AutoCompleteTextView)
+                        findViewById(R.id.selectEditBook);
+
+                EditText editNotes = (EditText) findViewById(R.id.editNotes);
+                boolean finishedIsChecked = ((CheckBox) findViewById(R.id.editFinished)).isChecked();
+
+
+                if (fieldIsEmpty(selectEditBook) || fieldIsEmpty(editNotes)){
+                    Toast.makeText(getApplicationContext(), "The field can't be empty!", Toast.LENGTH_LONG).show();
+                } else if(idStatus == 0) {
+                    String bookName = selectEditBook.getText().toString();
+
+                    SQLiteBookDatabase dbBook = new SQLiteBookDatabase(getApplicationContext());
+                    Book b = dbBook.find(idStatus);
+
+                    Status status;
+
+                    if(finishedIsChecked) {
+                        status = new Status((int) id, b, 1, editNotes.getText().toString(), statusEdit.getBook().getId());
+                    } else {
+                        status = new Status((int) id, b, 0, editNotes.getText().toString(), statusEdit.getBook().getId());
+                    }
+
+                    SQLiteStatusDatabase db = new SQLiteStatusDatabase(getApplicationContext());
+                    db.update(status);
+
+                    Toast.makeText(getBaseContext(), "Status was updated with success!", Toast.LENGTH_LONG).show();
+                    changeActivity(getBaseContext(), MainActivity.class);
+                } else {
+                    String bookName = selectEditBook.getText().toString();
+
+                    SQLiteBookDatabase dbBook = new SQLiteBookDatabase(getApplicationContext());
+                    Book b = dbBook.find(idStatus);
+
+                    Status status;
+
+                    if(finishedIsChecked) {
+                        status = new Status((int) id, b, 1, editNotes.getText().toString(), idStatus);
+                    } else {
+                        status = new Status((int) id, b, 0, editNotes.getText().toString(), idStatus);
+                    }
+
+                    SQLiteStatusDatabase db = new SQLiteStatusDatabase(getApplicationContext());
+                    db.update(status);
+
+                    Toast.makeText(getBaseContext(), "Status was updated with success!", Toast.LENGTH_LONG).show();
+                    changeActivity(getBaseContext(), MainActivity.class);
+                }
+            }
+        });
     }
 
     protected void deleteStatus() {
