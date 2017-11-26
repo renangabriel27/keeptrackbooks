@@ -1,5 +1,6 @@
 package renan.tsi.pro.br.keeptrackbooks.activities;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -32,6 +33,7 @@ import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteStatusDatabase;
 import renan.tsi.pro.br.keeptrackbooks.models.Book;
 import renan.tsi.pro.br.keeptrackbooks.models.Category;
 import renan.tsi.pro.br.keeptrackbooks.models.Status;
+import renan.tsi.pro.br.keeptrackbooks.services.ServiceBook;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -140,4 +142,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

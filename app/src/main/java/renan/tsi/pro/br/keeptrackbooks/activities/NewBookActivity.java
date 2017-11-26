@@ -1,5 +1,6 @@
 package renan.tsi.pro.br.keeptrackbooks.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import renan.tsi.pro.br.keeptrackbooks.R;
 import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteBookDatabase;
 import renan.tsi.pro.br.keeptrackbooks.models.Book;
 import renan.tsi.pro.br.keeptrackbooks.models.Category;
+import renan.tsi.pro.br.keeptrackbooks.services.ServiceBook;
 
 public class NewBookActivity extends BooksActivity {
 
@@ -45,9 +47,16 @@ public class NewBookActivity extends BooksActivity {
         SQLiteBookDatabase db = new SQLiteBookDatabase(getApplicationContext());
         db.create(book);
         Toast.makeText(getBaseContext(), "Book was created with success!", Toast.LENGTH_LONG).show();
+
+        initService();
+
         changeActivity(getBaseContext(), BooksActivity.class);
     }
 
+    private void initService() {
+        Intent serviceIntent = new Intent(this, ServiceBook.class);
+        startService(serviceIntent);
+    }
 
     protected void saveBook() {
         final Button createBookBtn = (Button) findViewById(R.id.createBookBtn);

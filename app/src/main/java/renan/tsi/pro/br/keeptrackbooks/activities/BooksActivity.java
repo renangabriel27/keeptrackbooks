@@ -1,5 +1,6 @@
 package renan.tsi.pro.br.keeptrackbooks.activities;
 
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import renan.tsi.pro.br.keeptrackbooks.adapters.BookAdapter;
 import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteBookDatabase;
 import renan.tsi.pro.br.keeptrackbooks.models.Book;
 import renan.tsi.pro.br.keeptrackbooks.models.Category;
+import renan.tsi.pro.br.keeptrackbooks.services.ServiceBook;
 
 public class BooksActivity extends MainActivity {
 
@@ -101,6 +103,5 @@ public class BooksActivity extends MainActivity {
             }
         });
     }
-
 
 }

@@ -27,6 +27,7 @@
         <activity android:name=".activities.EditCategoryActivity" />
         <activity android:name=".activities.EditBookActivity" />
         <activity android:name=".activities.EditStatusActivity"></activity>
+        <service android:name=".services.ServiceBook"/>
     </application>
 
 </manifest>
