@@ -11,4 +11,9 @@
         android:orderInCategory="100"
         app:showAsAction="never"
         android:title="View categories"/>
+    <item
+        android:id="@+id/action_search_books"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="Search books"/>
 </menu>

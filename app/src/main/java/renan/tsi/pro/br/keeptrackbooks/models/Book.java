@@ -2,6 +2,10 @@ package renan.tsi.pro.br.keeptrackbooks.models;
 
 import android.content.Context;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteBookDatabase;
@@ -91,4 +95,5 @@ public class Book {
         dao = new SQLiteBookDatabase(context);
         return dao.all();
     }
+
 }

@@ -22,6 +22,17 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.nio.InvalidMarkException;
 import java.util.ArrayList;
 
@@ -73,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.action_categories:
                 changeActivity(getBaseContext(), CategoriesActivity.class);
+                break;
+            case R.id.action_search_books:
+                changeActivity(getBaseContext(), SearchBookActivity.class);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -142,6 +156,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 
 
 }
