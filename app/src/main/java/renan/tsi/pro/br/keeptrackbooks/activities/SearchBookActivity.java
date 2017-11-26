@@ -105,7 +105,6 @@ public class SearchBookActivity extends MainActivity {
                                     setListView();
                                 }
                             }
-                            // Log.v("Debug", response.getString("items"));
                         } catch(JSONException e) {
                             Toast.makeText(getApplicationContext(), "Erro na conexão", Toast.LENGTH_LONG).show();
                         }
@@ -116,7 +115,7 @@ public class SearchBookActivity extends MainActivity {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Erro na conexão!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Livro não encontrado!", Toast.LENGTH_LONG).show();
                     }
                 });
         queue.add(stringRequest);
