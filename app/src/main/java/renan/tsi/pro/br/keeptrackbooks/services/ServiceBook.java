@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import renan.tsi.pro.br.keeptrackbooks.activities.BooksActivity;
 import renan.tsi.pro.br.keeptrackbooks.activities.MainActivity;
+import renan.tsi.pro.br.keeptrackbooks.activities.NewStatusActivity;
 
 /**
  * Created by renan on 26/11/17.
@@ -26,14 +27,7 @@ public class ServiceBook extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.d("TESTE", "foi");
         notificate();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
-        return super.onStartCommand(intent,flags,startId);
     }
 
     protected void notificate() {
@@ -44,7 +38,7 @@ public class ServiceBook extends IntentService {
         mBuilder.setContentText("Create a status for track your notes!");
         mBuilder.setAutoCancel(true);
 
-        Intent resultIntent = new Intent(this, BooksActivity.class);
+        Intent resultIntent = new Intent(this, NewStatusActivity.class);
         resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resultIntent, 0);
 
         mBuilder.setContentIntent(resultPendingIntent);
