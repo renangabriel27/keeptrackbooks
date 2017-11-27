@@ -133,6 +133,18 @@ public class SQLiteStatusDatabase extends SQLiteOpenHelper {
         return result;
     }
 
+    public boolean hasBook(int bookId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query("status", new String[] { "id"}, "book_id = ?",
+                new String[] { String.valueOf(bookId) }, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            return true;
+        }
+        return false;
+    }
+
     public int count() {
         SQLiteDatabase db = this.getReadableDatabase();
 

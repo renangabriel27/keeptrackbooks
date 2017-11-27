@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import renan.tsi.pro.br.keeptrackbooks.R;
 import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteBookDatabase;
+import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteStatusDatabase;
 import renan.tsi.pro.br.keeptrackbooks.models.Book;
 import renan.tsi.pro.br.keeptrackbooks.models.Category;
 
@@ -90,8 +91,15 @@ public class EditBookActivity extends BooksActivity {
             @Override
             public void onClick(View view) {
                 SQLiteBookDatabase db = new SQLiteBookDatabase(getApplicationContext());
-                db.delete(bookEdit);
-                Toast.makeText(getBaseContext(), "Book was deleted with success!", Toast.LENGTH_LONG).show();
+                SQLiteStatusDatabase dbStatus = new SQLiteStatusDatabase(getApplicationContext());
+
+                if(dbStatus.hasBook(bookEdit.getId())) {
+                    Toast.makeText(getBaseContext(), "Book cannot be deleted, because has relationships with status!", Toast.LENGTH_LONG).show();
+                } else {
+                    db.delete(bookEdit);
+                    Toast.makeText(getBaseContext(), "Book was deleted with success!", Toast.LENGTH_LONG).show();
+                }
+
                 changeActivity(getBaseContext(), BooksActivity.class);
             }
         });

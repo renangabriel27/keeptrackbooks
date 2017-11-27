@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import renan.tsi.pro.br.keeptrackbooks.R;
 import renan.tsi.pro.br.keeptrackbooks.adapters.CategoryAdapter;
 import renan.tsi.pro.br.keeptrackbooks.adapters.StatusAdapter;
+import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteBookDatabase;
 import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteCategoryDatabase;
 import renan.tsi.pro.br.keeptrackbooks.models.Category;
 import renan.tsi.pro.br.keeptrackbooks.models.Status;
@@ -100,8 +101,14 @@ public class EditCategoryActivity extends MainActivity {
                 EditText c = (EditText) findViewById(R.id.editCategory);
 
                 SQLiteCategoryDatabase db = new SQLiteCategoryDatabase(getApplicationContext());
-                db.delete(categoryEdit);
-                Toast.makeText(getBaseContext(), "Category was deleted with success!", Toast.LENGTH_LONG).show();
+                SQLiteBookDatabase dbBook = new SQLiteBookDatabase((getApplicationContext()));
+                if(dbBook.hasBookWithCategory(categoryEdit.getId())) {
+                    Toast.makeText(getBaseContext(), "Category cannot be deleted, because has relationships with books!", Toast.LENGTH_LONG).show();
+                } else {
+                    db.delete(categoryEdit);
+                    Toast.makeText(getBaseContext(), "Category was deleted with success!", Toast.LENGTH_LONG).show();
+                }
+
                 changeActivity(getBaseContext(), CategoriesActivity.class);
             }
         });

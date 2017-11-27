@@ -126,6 +126,18 @@ public class SQLiteBookDatabase extends SQLiteOpenHelper {
         return result;
     }
 
+    public boolean hasBookWithCategory(int categoryId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query("books", new String[] { "id"}, "category_id = ?",
+                new String[] { String.valueOf(categoryId) }, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            return true;
+        }
+        return false;
+    }
+
     public int count() {
         SQLiteDatabase db = this.getReadableDatabase();
 
