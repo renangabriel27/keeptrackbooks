@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.Image;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -124,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeToNewStatus() {
-        ImageButton newStatusBtn = (ImageButton) findViewById(R.id.newStatusBtn);
+        FloatingActionButton newStatusBtn = (FloatingActionButton) findViewById(R.id.newStatusBtn);
 
         newStatusBtn.setOnClickListener(new View.OnClickListener() {
             @Override

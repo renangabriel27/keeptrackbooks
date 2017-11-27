@@ -1,15 +1,12 @@
 package renan.tsi.pro.br.keeptrackbooks.activities;
 
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -17,10 +14,8 @@ import java.util.ArrayList;
 
 import renan.tsi.pro.br.keeptrackbooks.R;
 import renan.tsi.pro.br.keeptrackbooks.adapters.BookAdapter;
-import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteBookDatabase;
 import renan.tsi.pro.br.keeptrackbooks.models.Book;
 import renan.tsi.pro.br.keeptrackbooks.models.Category;
-import renan.tsi.pro.br.keeptrackbooks.services.ServiceBook;
 
 public class BooksActivity extends MainActivity {
 
@@ -94,7 +89,7 @@ public class BooksActivity extends MainActivity {
     }
 
     private void changeToNewBook() {
-        ImageButton newBookBtn = (ImageButton) findViewById(R.id.newBookBtn);
+        FloatingActionButton newBookBtn = (FloatingActionButton) findViewById(R.id.newCategoryBtn);
 
         newBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
