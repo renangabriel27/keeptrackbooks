@@ -49,11 +49,16 @@ public class NewBookActivity extends BooksActivity {
         Book book = new Book(bookName, bookNumberPages, getCategory());
 
         SQLiteBookDatabase db = new SQLiteBookDatabase(getApplicationContext());
-        db.create(book);
+        Object bookExists = db.findByTitle(bookName);
 
+        if(bookExists == null) {
+            db.create(book);
+            initService();
+            showSuccessMessage();
+        } else {
+            showMessage("The book has been created!");
+        }
 
-        initService();
-        showSuccessMessage();
         changeActivity(getBaseContext(), BooksActivity.class);
     }
 

@@ -79,6 +79,27 @@ public class SQLiteBookDatabase extends SQLiteOpenHelper {
         return result;
     }
 
+    public Book findByTitle(String title) {
+        Book result = null;
+        SQLiteCategoryDatabase dbCategory = new SQLiteCategoryDatabase(this.ctx);
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query("books", new String[] { "id", "title", "number_pages", "category_id" }, "title=?",
+                new String[] { String.valueOf(title) }, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            Category category = dbCategory.find(cursor.getInt(3));
+            result = new Book(cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getInt(2),
+                    category);
+        }
+
+        db.close();
+
+        return result;
+    }
+
     public void delete(Book b) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("books", "id = ?",

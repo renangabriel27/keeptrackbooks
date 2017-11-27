@@ -65,6 +65,23 @@ public class SQLiteCategoryDatabase extends SQLiteOpenHelper {
         return result;
     }
 
+    public Category findByName(String name) {
+        Category result = null;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query("categories", new String[] { "id", "name" }, "name=?",
+                new String[] { String.valueOf(name) }, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            result = new Category(cursor.getInt(0), cursor.getString(1));
+        }
+
+        db.close();
+
+        return result;
+    }
+
     public void delete(Category c) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("categories", "id = ?",

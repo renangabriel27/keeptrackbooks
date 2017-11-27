@@ -1,6 +1,7 @@
 package renan.tsi.pro.br.keeptrackbooks.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,10 +30,15 @@ public class NewCategoryActivity extends MainActivity {
         db = new SQLiteCategoryDatabase(getApplicationContext());
 
         category = new Category(nameCategory.getText().toString());
+        Object categoryExists = db.findByName(category.getName());
 
-        db.create(category);
+        if(categoryExists == null) {
+            db.create(category);
+            showSuccessMessage();
+        } else {
+            showMessage("The category has been created!");
+        }
 
-        showSuccessMessage();
         changeActivity(getBaseContext(), CategoriesActivity.class);
     }
 
