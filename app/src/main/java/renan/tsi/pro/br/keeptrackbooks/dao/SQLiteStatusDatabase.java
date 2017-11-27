@@ -14,37 +14,11 @@ import renan.tsi.pro.br.keeptrackbooks.models.Book;
 import renan.tsi.pro.br.keeptrackbooks.models.Category;
 import renan.tsi.pro.br.keeptrackbooks.models.Status;
 
-public class SQLiteStatusDatabase extends SQLiteOpenHelper {
-
-    private static final String DATABASE_NAME = "keeptrackbook";
-    private static final int DATABASE_VERSION = 4;
-    private Context ctx;
+public class SQLiteStatusDatabase extends SQLiteBase {
 
     public SQLiteStatusDatabase(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.ctx = context;
+        super(context);
     }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE status (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "book_id INTEGER," +
-                "status INTEGER," +
-                "notes TEXT," +
-                "FOREIGN KEY (book_id) REFERENCES books(id))");
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w("PDMLog", "Upgrading database from version " + oldVersion
-                + " to " + newVersion + ", which will destroy all old data");
-
-        db.execSQL("DROP TABLE IF EXISTS status");
-        onCreate(db);
-    }
-
-    // ========== CRUD Operations
 
     public void create(Status s) {
         ContentValues values = new ContentValues();

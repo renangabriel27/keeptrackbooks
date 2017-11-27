@@ -13,37 +13,11 @@ import android.util.Log;
 import renan.tsi.pro.br.keeptrackbooks.models.Book;
 import renan.tsi.pro.br.keeptrackbooks.models.Category;
 
-public class SQLiteBookDatabase extends SQLiteOpenHelper {
+public class SQLiteBookDatabase extends SQLiteBase {
 
-    private static final String DATABASE_NAME = "keeptrackbook";
-    private static final int DATABASE_VERSION = 4;
-    private static Context ctx;
-
-    public SQLiteBookDatabase(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.ctx = context;
+    public SQLiteBookDatabase(Context ctx) {
+        super(ctx);
     }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE books (" +
-                                   "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                   "title TEXT," +
-                                   "number_pages INTEGER," +
-                                   "category_id INTEGER," +
-                                   "FOREIGN KEY (category_id) REFERENCES categories(id))");
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w("PDMLog", "Upgrading database from version " + oldVersion
-                + " to " + newVersion + ", which will destroy all old data");
-
-        db.execSQL("DROP TABLE IF EXISTS books");
-        onCreate(db);
-    }
-
-    // ========== CRUD Operations
 
     public void create(Book b) {
         ContentValues values = new ContentValues();
