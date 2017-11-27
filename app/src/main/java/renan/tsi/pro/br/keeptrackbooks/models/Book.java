@@ -66,7 +66,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return title + " " + _id;
+        return title;
     }
 
     public static Book find(int id, Context context) {

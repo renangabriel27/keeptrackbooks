@@ -67,10 +67,8 @@ public class BooksActivity extends MainActivity {
 
     protected  void setCategory(ArrayAdapter<Category> categoryAdapter, int position) {
         int categoryId = categoryAdapter.getItem(position).getId();
-        Log.d("ID CAT", "" + categoryId);
         dbCategory = new SQLiteCategoryDatabase(getApplicationContext());
         this.category = dbCategory.find(categoryId);
-        Log.d("CAT", "" + this.category);
     }
 
     protected Category getCategory() { return this.category; }

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import renan.tsi.pro.br.keeptrackbooks.R;
 import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteBookDatabase;
+import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteCategoryDatabase;
 import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteStatusDatabase;
 import renan.tsi.pro.br.keeptrackbooks.models.Book;
 import renan.tsi.pro.br.keeptrackbooks.models.Category;
@@ -24,13 +25,12 @@ import renan.tsi.pro.br.keeptrackbooks.models.Status;
 public class NewStatusActivity extends MainActivity {
 
     private ArrayAdapter<Book> bookAdapter;
-    private int idBook;
     private EditText notes;
     private boolean finishedIsChecked;
     private int bookNumberPages = 0;
     private AutoCompleteTextView selectBook;
     private Status status;
-    private Book book;
+
     private SQLiteBookDatabase dbBook;
     private SQLiteStatusDatabase dbStatus;
 
@@ -55,7 +55,7 @@ public class NewStatusActivity extends MainActivity {
             @Override
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                setIdForBook(bookAdapter.getItem(position).getId());
+                setBook(bookAdapter, position);
             }
         });
     }
@@ -68,10 +68,6 @@ public class NewStatusActivity extends MainActivity {
         }
 
         return  b;
-    }
-
-    protected void setIdForBook(int id) {
-        this.idBook = id;
     }
 
     protected void saveStatus() {
@@ -89,7 +85,7 @@ public class NewStatusActivity extends MainActivity {
     private void validateAndCreate() {
         if (fieldIsEmpty(notes) || fieldIsEmpty(selectBook)){
             showMessageWhenFieldsEmpty();
-        } else if(idBook == 0) {
+        } else if(getBook().getId() == 0) {
             showMessage("Invalid book!");
         } else {
             createStatus();
@@ -99,14 +95,12 @@ public class NewStatusActivity extends MainActivity {
     private void createStatus() {
         String statusNotes = notes.getText().toString();
 
-        dbBook = new SQLiteBookDatabase(getApplicationContext());
         dbStatus = new SQLiteStatusDatabase(getApplicationContext());
-        book = dbBook.find(idBook);
 
         if(finishedIsChecked) {
-            status = new Status(book, 1, statusNotes, idBook);
+            status = new Status(getBook(), 1, statusNotes);
         } else {
-            status = new Status(book, 0, statusNotes, idBook);
+            status = new Status(getBook(), 0, statusNotes);
         }
 
         dbStatus.create(status);

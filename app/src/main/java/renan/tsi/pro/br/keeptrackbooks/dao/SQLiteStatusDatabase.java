@@ -48,7 +48,7 @@ public class SQLiteStatusDatabase extends SQLiteOpenHelper {
 
     public void create(Status s) {
         ContentValues values = new ContentValues();
-        values.put("book_id", s.getBookId());
+        values.put("book_id", s.getBook().getId());
         values.put("status", s.getStatus());
         values.put("notes", s.getNotes());
 
@@ -75,8 +75,7 @@ public class SQLiteStatusDatabase extends SQLiteOpenHelper {
             result = new Status(cursor.getInt(0),
                                 book,
                                 cursor.getInt(2),
-                                cursor.getString(3),
-                                cursor.getInt(1));
+                                cursor.getString(3));
         }
 
         db.close();
@@ -96,7 +95,7 @@ public class SQLiteStatusDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put("book_id", s.getBookId());
+        values.put("book_id", s.getBook().getId());
         values.put("status", s.getStatus());
         values.put("notes", s.getNotes());
 
@@ -123,8 +122,7 @@ public class SQLiteStatusDatabase extends SQLiteOpenHelper {
                 result.add(new Status(cursor.getInt(0),
                                       book,
                                       cursor.getInt(2),
-                                      cursor.getString(3),
-                                      cursor.getInt(1)));
+                                      cursor.getString(3)));
             } while (cursor.moveToNext());
         }
 

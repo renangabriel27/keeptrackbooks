@@ -16,49 +16,25 @@ public class Status extends Application {
 
     private int _id;
     private Book book;
-    private int bookId;
     private int status;
     private String notes;
     private static SQLiteStatusDatabase dao;
 
-    public Status(int _id, int bookId, int status, String notes) {
-        this._id = _id;
-        this.bookId = bookId;
-        this.status = status;
-        this.notes = notes;
-    }
-
-    public Status(int _id, Book book, int status, String notes, int bookId) {
+    public Status(int _id, Book book, int status, String notes) {
         this._id = _id;
         this.book = book;
         this.status = status;
         this.notes = notes;
-        this.bookId = bookId;
     }
 
-    public Status(Book book, int status, String notes, int bookId) {
+    public Status(Book book, int status, String notes) {
         this.book = book;
-        this.status = status;
-        this.notes = notes;
-        this.bookId = bookId;
-    }
-
-    public Status(int bookId, int status, String notes) {
-        this.bookId = bookId;
         this.status = status;
         this.notes = notes;
     }
 
     public int getId() {
         return _id;
-    }
-
-    public int getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
     }
 
     public Book getBook() {

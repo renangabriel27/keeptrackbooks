@@ -26,7 +26,6 @@ public class EditStatusActivity extends MainActivity {
 
     private long id;
     private Status statusEdit;
-    private int idStatus;
     private SQLiteStatusDatabase db;
     private EditText editNotes;
     private CheckBox editFinished;
@@ -72,7 +71,7 @@ public class EditStatusActivity extends MainActivity {
             @Override
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                setIdForStatus(statusAdapter.getItem(position).getId());
+                setBook(statusAdapter, position);
             }
         });
     }
@@ -87,24 +86,19 @@ public class EditStatusActivity extends MainActivity {
         return  b;
     }
 
-    protected void setIdForStatus(int id) {
-        this.idStatus = id;
-    }
-
     protected void updateStatus() {
         Button updateStatusBtn = (Button) findViewById(R.id.updateStatusBtn);
+        editSelectedBook = (AutoCompleteTextView) findViewById(R.id.selectEditBook);
 
         updateStatusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getValuesFromView();
-
-                if (fieldIsEmpty(editSelectedBook) || fieldIsEmpty(editNotes)){
-                    Toast.makeText(getApplicationContext(), "The field can't be empty!", Toast.LENGTH_LONG).show();
-                } else if(idStatus == 0) {
-                    validateAndUpdate(statusEdit.getBook().getId());
+                if (fieldIsEmpty(editSelectedBook) || fieldIsEmpty(editNotes)) {
+                    showMessageWhenFieldsEmpty();
+                } else if(getBook() == null) {
+                   validateAndUpdate(statusEdit.getBook());
                 } else {
-                    validateAndUpdate(idStatus);
+                    validateAndUpdate(getBook());
                 }
             }
         });
@@ -124,16 +118,15 @@ public class EditStatusActivity extends MainActivity {
         });
     }
 
-    private void validateAndUpdate(int bookId) {
+    private void validateAndUpdate(Book book) {
         String bookName = editSelectedBook.getText().toString();
 
         SQLiteBookDatabase dbBook = new SQLiteBookDatabase(getApplicationContext());
-        Book b = dbBook.find(idStatus);
 
         if(editFinished.isChecked()) {
-            status = new Status((int) id, b, 1, editNotes.getText().toString(), bookId);
+            status = new Status((int) id, book, 1, editNotes.getText().toString());
         } else {
-            status = new Status((int) id, b, 0, editNotes.getText().toString(), bookId);
+            status = new Status((int) id, book, 0, editNotes.getText().toString());
         }
 
         db = new SQLiteStatusDatabase(getApplicationContext());

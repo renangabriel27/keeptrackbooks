@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -49,6 +50,15 @@ import renan.tsi.pro.br.keeptrackbooks.services.ServiceBook;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Toolbar mToolbar;
+    private MenuInflater menuInflater;
+    private ImageButton backBtn;
+    private FloatingActionButton newStatusBtn;
+    private SQLiteBookDatabase dbBook;
+    private ListView lv;
+    private  ListAdapter statusAdapter;
+    private Book book;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,13 +74,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setToolbar() {
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
+        menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu, menu);
 
         return true;
@@ -94,14 +104,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void changeToMain() {
-        ImageButton backBtn = (ImageButton) findViewById(R.id.backBtn);
-
+        backBtn = (ImageButton) findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 changeActivity(getBaseContext(), MainActivity.class);
             }
         });
+    }
+
+    protected  void setBook(ArrayAdapter<Book> bookAdapter, int position) {
+        int bookId = bookAdapter.getItem(position).getId();
+        dbBook = new SQLiteBookDatabase(getApplicationContext());
+        this.book = dbBook.find(bookId);
+    }
+
+    protected Book getBook() {
+        return this.book;
     }
 
     protected void changeActivity(Context context, Class nameClass) {
@@ -122,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeToNewStatus() {
-        FloatingActionButton newStatusBtn = (FloatingActionButton) findViewById(R.id.newStatusBtn);
+        newStatusBtn = (FloatingActionButton) findViewById(R.id.newStatusBtn);
 
         newStatusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,8 +160,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setListView() {
-        ListView lv = (ListView) findViewById(R.id.statusListView);
-        final ListAdapter statusAdapter = new StatusAdapter(
+        lv = (ListView) findViewById(R.id.statusListView);
+
+        statusAdapter = new StatusAdapter(
                 (ArrayList<Status>) Status.all(getApplicationContext()), getLayoutInflater());
         lv.setAdapter(statusAdapter);
 
