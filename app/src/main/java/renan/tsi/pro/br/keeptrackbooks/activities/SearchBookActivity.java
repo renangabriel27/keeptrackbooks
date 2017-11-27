@@ -61,7 +61,7 @@ public class SearchBookActivity extends MainActivity {
                     showMessageWhenFieldsEmpty();
                 } else {
                     result.clear();
-                    showMessage("Carregando...");
+                    showMessage("Loading...");
                     requisitionGetJson(nameForSearch.getText().toString());
                 }
             }
@@ -77,6 +77,8 @@ public class SearchBookActivity extends MainActivity {
 
     private void requisitionGetJson(String name) {
         RequestQueue queue = Volley.newRequestQueue(this);
+
+        name = name.replaceAll("\\s+", "+");
 
         String url ="https://www.googleapis.com/books/v1/volumes?q=" + name;
 
@@ -96,8 +98,9 @@ public class SearchBookActivity extends MainActivity {
                                     String title = volumeInfo.getString("title");
                                     String category = volumeInfo.getString("categories");
                                     String pageCount = volumeInfo.getString("pageCount");
+                                    String authors = volumeInfo.getString("authors");
 
-                                    String bookFormated = title + "\n" + category + "\n" + pageCount + " pages";
+                                    String bookFormated = title + "\n" + authors + "\n" + category + "\n" + pageCount + " pages";
                                     result.add(bookFormated);
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -107,7 +110,7 @@ public class SearchBookActivity extends MainActivity {
                                 }
                             }
                         } catch(JSONException e) {
-                            showMessage("Erro na conexão!");
+                            showMessage("Error on connection!");
                         }
                     }
                 },
@@ -116,7 +119,7 @@ public class SearchBookActivity extends MainActivity {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        showMessage("Livro não encontrado!");
+                        showMessage("Book not found!");
                     }
                 });
         queue.add(stringRequest);

@@ -98,7 +98,7 @@ public class EditBookActivity extends BooksActivity {
                 dbStatus = new SQLiteStatusDatabase(getApplicationContext());
 
                 if(dbStatus.hasBook(bookEdit.getId())) {
-                    showMessage("Book cannot be deleted, because has relationships with status!");
+                    showMessage("Book can't deleted, because has relationships with status!");
                 } else {
                     dbBook.delete(bookEdit);
                     showMessage("Book was deleted with success!");

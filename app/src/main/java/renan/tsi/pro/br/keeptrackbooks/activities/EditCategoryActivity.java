@@ -103,7 +103,7 @@ public class EditCategoryActivity extends MainActivity {
                 dbBook = new SQLiteBookDatabase((getApplicationContext()));
 
                 if(dbBook.hasBookWithCategory(categoryEdit.getId())) {
-                    showMessage("Category cannot be deleted, because has relationships with books!");
+                    showMessage("Category can't deleted, because has relationships with books!");
                 } else {
                     db.delete(categoryEdit);
                     showMessage("Category was deleted with success!");
