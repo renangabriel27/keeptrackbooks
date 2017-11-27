@@ -25,6 +25,12 @@ public class EditCategoryActivity extends MainActivity {
 
     private long id;
     private Category categoryEdit;
+    private SQLiteCategoryDatabase db;
+    private SQLiteBookDatabase dbBook;
+    private EditText editCategoryText;
+    private ImageButton backCategoriesBtn;
+    private Button updateCategoryBtn;
+    private Category category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,20 +49,18 @@ public class EditCategoryActivity extends MainActivity {
         Bundle params = intent.getExtras();
 
         if(params!=null){
-            this.id = params.getLong("id");
-
-            Log.i("Params", "id:"+params.getLong("id"));
+            id = params.getLong("id");
         }
 
-        SQLiteCategoryDatabase db = new SQLiteCategoryDatabase(getApplicationContext());
-        this.categoryEdit = db.find((int) id);
+        db = new SQLiteCategoryDatabase(getApplicationContext());
+        categoryEdit = db.find((int) id);
 
-        EditText editCategoryText = (EditText) findViewById(R.id.editCategory);
+        editCategoryText = (EditText) findViewById(R.id.editCategory);
         editCategoryText.setText(categoryEdit.getName());
     }
 
     protected void changeToCategories() {
-        ImageButton backCategoriesBtn = (ImageButton) findViewById(R.id.backCategoriesBtn);
+        backCategoriesBtn = (ImageButton) findViewById(R.id.backCategoriesBtn);
 
         backCategoriesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,25 +71,20 @@ public class EditCategoryActivity extends MainActivity {
     }
 
     protected void updateCategory() {
-        Button updateCategoryBtn = (Button) findViewById(R.id.updateCategoryBtn);
+        updateCategoryBtn = (Button) findViewById(R.id.updateCategoryBtn);
 
         updateCategoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EditText c = (EditText) findViewById(R.id.editCategory);
 
-                if (c.getText().toString().trim().equals("") ||
-                        c.getText().toString().trim().equals("")){
-
-                    Toast.makeText(getApplicationContext(), "The field can't be empty!", Toast.LENGTH_LONG).show();
-
+                if (fieldIsEmpty(c)){
+                    showMessageWhenFieldsEmpty();
                 } else {
-
-                    Category category = new Category((int) id, c.getText().toString());
-
-                    SQLiteCategoryDatabase db = new SQLiteCategoryDatabase(getApplicationContext());
+                    category = new Category((int) id, c.getText().toString());
+                    db = new SQLiteCategoryDatabase(getApplicationContext());
                     db.update(category);
-                    Toast.makeText(getBaseContext(), "Category was updated with success!", Toast.LENGTH_LONG).show();
+                    showSuccessUpdateMessage();
                     changeActivity(getBaseContext(), CategoriesActivity.class);
                 }
             }
@@ -100,18 +99,23 @@ public class EditCategoryActivity extends MainActivity {
             public void onClick(View view) {
                 EditText c = (EditText) findViewById(R.id.editCategory);
 
-                SQLiteCategoryDatabase db = new SQLiteCategoryDatabase(getApplicationContext());
-                SQLiteBookDatabase dbBook = new SQLiteBookDatabase((getApplicationContext()));
+                db = new SQLiteCategoryDatabase(getApplicationContext());
+                dbBook = new SQLiteBookDatabase((getApplicationContext()));
+
                 if(dbBook.hasBookWithCategory(categoryEdit.getId())) {
-                    Toast.makeText(getBaseContext(), "Category cannot be deleted, because has relationships with books!", Toast.LENGTH_LONG).show();
+                    showMessage("Category cannot be deleted, because has relationships with books!");
                 } else {
                     db.delete(categoryEdit);
-                    Toast.makeText(getBaseContext(), "Category was deleted with success!", Toast.LENGTH_LONG).show();
+                    showMessage("Category was deleted with success!");
                 }
 
                 changeActivity(getBaseContext(), CategoriesActivity.class);
             }
         });
+    }
+
+    private void showSuccessUpdateMessage() {
+        showMessage("Category was updated with success!");
     }
 
 }

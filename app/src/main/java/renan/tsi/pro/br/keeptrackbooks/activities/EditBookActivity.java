@@ -23,6 +23,14 @@ public class EditBookActivity extends BooksActivity {
     private long id;
     private Book bookEdit;
     private ArrayAdapter<Category> catAdapter;
+    private SQLiteBookDatabase dbBook;
+    private SQLiteStatusDatabase dbStatus;
+    private EditText editBookTitle;
+    private EditText editNumberPages;
+    private AutoCompleteTextView editCategoryBook;
+    private ImageButton backBooksBtn;
+    private Button deleteBookBtn;
+    private int bookNumberPages = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,23 +49,20 @@ public class EditBookActivity extends BooksActivity {
         Bundle params = intent.getExtras();
 
         if(params!=null){
-            this.id = params.getLong("id");
-
-            Log.i("Params", "id:"+params.getLong("id"));
+            id = params.getLong("id");
         }
 
-        SQLiteBookDatabase db = new SQLiteBookDatabase(getApplicationContext());
-        this.bookEdit = db.find((int) id);
+        dbBook = new SQLiteBookDatabase(getApplicationContext());
+        bookEdit = dbBook.find((int) id);
 
-        EditText editBookTitle = (EditText) findViewById(R.id.editBookTitle);
+        editBookTitle = (EditText) findViewById(R.id.editBookTitle);
         editBookTitle.setText(bookEdit.getTitle());
 
-        EditText editNumberPages = (EditText) findViewById(R.id.editNumberPages);
+        editNumberPages = (EditText) findViewById(R.id.editNumberPages);
         editNumberPages.setText(String.valueOf(bookEdit.getNumberPages()));
 
-        AutoCompleteTextView editCategoryBook = (AutoCompleteTextView)
+        editCategoryBook = (AutoCompleteTextView)
                 findViewById(R.id.selectEditCategory);
-
         editCategoryBook.setText(bookEdit.getCategory().getName());
 
         catAdapter = new ArrayAdapter<Category>(this,
@@ -68,14 +73,13 @@ public class EditBookActivity extends BooksActivity {
             @Override
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                setIdForCategory(catAdapter.getItem(position).getId());
+               setCategory(catAdapter, position);
             }
         });
     }
 
     protected void changeToBooks() {
-        ImageButton backBooksBtn = (ImageButton) findViewById(R.id.backBtn);
-
+        backBooksBtn = (ImageButton) findViewById(R.id.backBtn);
         backBooksBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,19 +89,19 @@ public class EditBookActivity extends BooksActivity {
     }
 
     protected void deleteBook() {
-        Button deleteBookBtn = (Button) findViewById(R.id.deleteBookBtn);
+        deleteBookBtn = (Button) findViewById(R.id.deleteBookBtn);
 
         deleteBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SQLiteBookDatabase db = new SQLiteBookDatabase(getApplicationContext());
-                SQLiteStatusDatabase dbStatus = new SQLiteStatusDatabase(getApplicationContext());
+                dbBook = new SQLiteBookDatabase(getApplicationContext());
+                dbStatus = new SQLiteStatusDatabase(getApplicationContext());
 
                 if(dbStatus.hasBook(bookEdit.getId())) {
-                    Toast.makeText(getBaseContext(), "Book cannot be deleted, because has relationships with status!", Toast.LENGTH_LONG).show();
+                    showMessage("Book cannot be deleted, because has relationships with status!");
                 } else {
-                    db.delete(bookEdit);
-                    Toast.makeText(getBaseContext(), "Book was deleted with success!", Toast.LENGTH_LONG).show();
+                    dbBook.delete(bookEdit);
+                    showMessage("Book was deleted with success!");
                 }
 
                 changeActivity(getBaseContext(), BooksActivity.class);
@@ -111,53 +115,37 @@ public class EditBookActivity extends BooksActivity {
         updateBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText nameBook = (EditText) findViewById(R.id.editBookTitle);
-                EditText numberPages = (EditText) findViewById(R.id.editNumberPages);
-
-                AutoCompleteTextView categoryBook = (AutoCompleteTextView)
-                        findViewById(R.id.selectEditCategory);
-
-
-                if (fieldIsEmpty(nameBook) || fieldIsEmpty(numberPages) || fieldIsEmpty(numberPages)){
-                    Toast.makeText(getApplicationContext(), "The field can't be empty!", Toast.LENGTH_LONG).show();
-                } else if(getIdCategory() == 0) {
-                    String bookName = nameBook.getText().toString();
-                    int bookNumberPages = 0;
-
-                    try {
-                        bookNumberPages = Integer.parseInt(numberPages.getText().toString());
-                    } catch(Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    Book book = new Book((int) id, bookName, bookNumberPages, bookEdit.getCategory().getId());
-
-                    SQLiteBookDatabase db = new SQLiteBookDatabase(getApplicationContext());
-                    db.update(book);
-
-                    Toast.makeText(getBaseContext(), "Book was updated with success!", Toast.LENGTH_LONG).show();
-                    changeActivity(getBaseContext(), BooksActivity.class);
+                if (fieldIsEmpty(editBookTitle) || fieldIsEmpty(editNumberPages) || fieldIsEmpty(editNumberPages) || fieldIsEmpty(editCategoryBook)) {
+                    showMessageWhenFieldsEmpty();
+                } else if(getCategory().getId() == 0) {
+                    validAndUpdate(bookEdit.getCategory());
                 } else {
-                    String bookName = nameBook.getText().toString();
-                    int bookNumberPages = 0;
-
-                    try {
-                        bookNumberPages = Integer.parseInt(numberPages.getText().toString());
-                    } catch(Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    Log.d("IDD", ""  + idCategory);
-                    Book book = new Book((int) id, bookName, bookNumberPages, idCategory);
-
-                    SQLiteBookDatabase db = new SQLiteBookDatabase(getApplicationContext());
-                    db.update(book);
-
-                    Toast.makeText(getBaseContext(), "Book was updated with success!", Toast.LENGTH_LONG).show();
-                    changeActivity(getBaseContext(), BooksActivity.class);
+                    validAndUpdate(getCategory());
                 }
             }
         });
+    }
+
+    private void validAndUpdate(Category category) {
+        String bookName = editBookTitle.getText().toString();
+
+        try {
+            bookNumberPages = Integer.parseInt(editNumberPages.getText().toString());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        Book book = new Book((int) id, bookName, bookNumberPages, category);
+
+        dbBook = new SQLiteBookDatabase(getApplicationContext());
+        dbBook.update(book);
+
+        showSuccessUpdateMessage();
+        changeActivity(getBaseContext(), BooksActivity.class);
+    }
+
+    private void showSuccessUpdateMessage() {
+        showMessage("Book was updated with success!");
     }
 
 }

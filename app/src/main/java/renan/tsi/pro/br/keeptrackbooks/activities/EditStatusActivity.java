@@ -27,6 +27,12 @@ public class EditStatusActivity extends MainActivity {
     private long id;
     private Status statusEdit;
     private int idStatus;
+    private SQLiteStatusDatabase db;
+    private EditText editNotes;
+    private CheckBox editFinished;
+    private AutoCompleteTextView editSelectedBook;
+    private ArrayAdapter<Book> statusAdapter;
+    private Status status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,28 +50,21 @@ public class EditStatusActivity extends MainActivity {
         Bundle params = intent.getExtras();
 
         if(params!=null){
-            this.id = params.getLong("id");
-
-            Log.i("Params", "id:"+params.getLong("id"));
+            id = params.getLong("id");
         }
 
-        SQLiteStatusDatabase db = new SQLiteStatusDatabase(getApplicationContext());
-        this.statusEdit = db.find((int) id);
+        db = new SQLiteStatusDatabase(getApplicationContext());
+        statusEdit = db.find((int) id);
 
-        EditText editNotes = (EditText) findViewById(R.id.editNotes);
+        getValuesFromView();
         editNotes.setText(statusEdit.getNotes());
-
-        CheckBox editFinished = (CheckBox) findViewById(R.id.editFinished);
 
         if(statusEdit.getStatus() == 1)
           editFinished.setChecked(true);
 
-        AutoCompleteTextView editSelectedBook = (AutoCompleteTextView)
-                findViewById(R.id.selectEditBook);
-
         editSelectedBook.setText(statusEdit.getBook().getTitle());
 
-        final ArrayAdapter<Book> statusAdapter = new ArrayAdapter<Book>(this,
+        statusAdapter = new ArrayAdapter<Book>(this,
                 android.R.layout.simple_dropdown_item_1line, getBooks());
 
         editSelectedBook.setAdapter(statusAdapter);
@@ -87,6 +86,7 @@ public class EditStatusActivity extends MainActivity {
 
         return  b;
     }
+
     protected void setIdForStatus(int id) {
         this.idStatus = id;
     }
@@ -97,53 +97,14 @@ public class EditStatusActivity extends MainActivity {
         updateStatusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AutoCompleteTextView selectEditBook = (AutoCompleteTextView)
-                        findViewById(R.id.selectEditBook);
+                getValuesFromView();
 
-                EditText editNotes = (EditText) findViewById(R.id.editNotes);
-                boolean finishedIsChecked = ((CheckBox) findViewById(R.id.editFinished)).isChecked();
-
-
-                if (fieldIsEmpty(selectEditBook) || fieldIsEmpty(editNotes)){
+                if (fieldIsEmpty(editSelectedBook) || fieldIsEmpty(editNotes)){
                     Toast.makeText(getApplicationContext(), "The field can't be empty!", Toast.LENGTH_LONG).show();
                 } else if(idStatus == 0) {
-                    String bookName = selectEditBook.getText().toString();
-
-                    SQLiteBookDatabase dbBook = new SQLiteBookDatabase(getApplicationContext());
-                    Book b = dbBook.find(idStatus);
-
-                    Status status;
-
-                    if(finishedIsChecked) {
-                        status = new Status((int) id, b, 1, editNotes.getText().toString(), statusEdit.getBook().getId());
-                    } else {
-                        status = new Status((int) id, b, 0, editNotes.getText().toString(), statusEdit.getBook().getId());
-                    }
-
-                    SQLiteStatusDatabase db = new SQLiteStatusDatabase(getApplicationContext());
-                    db.update(status);
-
-                    Toast.makeText(getBaseContext(), "Status was updated with success!", Toast.LENGTH_LONG).show();
-                    changeActivity(getBaseContext(), MainActivity.class);
+                    validateAndUpdate(statusEdit.getBook().getId());
                 } else {
-                    String bookName = selectEditBook.getText().toString();
-
-                    SQLiteBookDatabase dbBook = new SQLiteBookDatabase(getApplicationContext());
-                    Book b = dbBook.find(idStatus);
-
-                    Status status;
-
-                    if(finishedIsChecked) {
-                        status = new Status((int) id, b, 1, editNotes.getText().toString(), idStatus);
-                    } else {
-                        status = new Status((int) id, b, 0, editNotes.getText().toString(), idStatus);
-                    }
-
-                    SQLiteStatusDatabase db = new SQLiteStatusDatabase(getApplicationContext());
-                    db.update(status);
-
-                    Toast.makeText(getBaseContext(), "Status was updated with success!", Toast.LENGTH_LONG).show();
-                    changeActivity(getBaseContext(), MainActivity.class);
+                    validateAndUpdate(idStatus);
                 }
             }
         });
@@ -161,5 +122,34 @@ public class EditStatusActivity extends MainActivity {
                 changeActivity(getBaseContext(), MainActivity.class);
             }
         });
+    }
+
+    private void validateAndUpdate(int bookId) {
+        String bookName = editSelectedBook.getText().toString();
+
+        SQLiteBookDatabase dbBook = new SQLiteBookDatabase(getApplicationContext());
+        Book b = dbBook.find(idStatus);
+
+        if(editFinished.isChecked()) {
+            status = new Status((int) id, b, 1, editNotes.getText().toString(), bookId);
+        } else {
+            status = new Status((int) id, b, 0, editNotes.getText().toString(), bookId);
+        }
+
+        db = new SQLiteStatusDatabase(getApplicationContext());
+        db.update(status);
+
+        showSuccessUpdateMessage();
+        changeActivity(getBaseContext(), MainActivity.class);
+    }
+
+    private void showSuccessUpdateMessage() {
+        showMessage("Status was updated with success!");
+    }
+
+    private void getValuesFromView() {
+        editNotes = (EditText) findViewById(R.id.editNotes);
+        editFinished = (CheckBox) findViewById(R.id.editFinished);
+        editSelectedBook = (AutoCompleteTextView) findViewById(R.id.selectEditBook);
     }
 }

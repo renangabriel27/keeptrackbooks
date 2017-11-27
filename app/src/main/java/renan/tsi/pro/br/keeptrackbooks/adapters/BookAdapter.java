@@ -29,7 +29,6 @@ public class BookAdapter extends BaseAdapter {
     public void add(Book b){
         books.add(b);
         notifyDataSetChanged();
-        Log.d("PDM",">>"+books.size());
     }
 
     public void remove(int index){
@@ -55,7 +54,6 @@ public class BookAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        Log.d("PDM","VIEW"+books.size());
         Book b = books.get(i);
 
         View v = inflater.inflate(R.layout.adapter_book_layout, null);

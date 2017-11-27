@@ -23,27 +23,35 @@ import renan.tsi.pro.br.keeptrackbooks.models.Status;
 
 public class NewStatusActivity extends MainActivity {
 
+    private ArrayAdapter<Book> bookAdapter;
     private int idBook;
+    private EditText notes;
+    private boolean finishedIsChecked;
+    private int bookNumberPages = 0;
+    private AutoCompleteTextView selectBook;
+    private Status status;
+    private Book book;
+    private SQLiteBookDatabase dbBook;
+    private SQLiteStatusDatabase dbStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_status);
 
-        backToMain();
+        changeToMain();
         setAutoCompleteForBooks();
         saveStatus();
     }
 
     protected void setAutoCompleteForBooks() {
-        final ArrayAdapter<Book> bookAdapter = new ArrayAdapter<Book>(this,
+        bookAdapter = new ArrayAdapter<Book>(this,
                 android.R.layout.simple_dropdown_item_1line, getBooks());
 
-        AutoCompleteTextView textView = (AutoCompleteTextView)
-                findViewById(R.id.selectBook);
+        selectBook = (AutoCompleteTextView) findViewById(R.id.selectBook);
 
-        textView.setAdapter(bookAdapter);
-        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        selectBook.setAdapter(bookAdapter);
+        selectBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -72,34 +80,47 @@ public class NewStatusActivity extends MainActivity {
         createStatusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText notes = (EditText) findViewById(R.id.notes);
-                boolean finishedIsChecked = ((CheckBox) findViewById(R.id.finished)).isChecked();
-                AutoCompleteTextView textView = (AutoCompleteTextView)
-                        findViewById(R.id.selectBook);
-
-                if (fieldIsEmpty(notes) || fieldIsEmpty(textView)){
-                    Toast.makeText(getApplicationContext(), "The field(s) can't be empty!", Toast.LENGTH_LONG).show();
-                } else if(idBook == 0) {
-                    Toast.makeText(getApplicationContext(), "Book invalid!", Toast.LENGTH_LONG).show();
-                } else {
-                    String statusNotes = notes.getText().toString();
-                    int bookNumberPages = 0;
-                    SQLiteBookDatabase dbBook = new SQLiteBookDatabase(getApplicationContext());
-                    Book b = dbBook.find(idBook);
-                    Status status;
-
-                    if(finishedIsChecked) {
-                        status = new Status(b, 1, statusNotes, idBook);
-                    } else {
-                        status = new Status(b, 0, statusNotes, idBook);
-                    }
-
-                    SQLiteStatusDatabase db = new SQLiteStatusDatabase(getApplicationContext());
-                    db.create(status);
-                    Toast.makeText(getBaseContext(), "Status was created with success!", Toast.LENGTH_LONG).show();
-                    changeActivity(getBaseContext(), MainActivity.class);
-                }
+                getValuesFromView();
+                validateAndCreate();
             }
         });
+    }
+
+    private void validateAndCreate() {
+        if (fieldIsEmpty(notes) || fieldIsEmpty(selectBook)){
+            showMessageWhenFieldsEmpty();
+        } else if(idBook == 0) {
+            showMessage("Invalid book!");
+        } else {
+            createStatus();
+        }
+    }
+
+    private void createStatus() {
+        String statusNotes = notes.getText().toString();
+
+        dbBook = new SQLiteBookDatabase(getApplicationContext());
+        dbStatus = new SQLiteStatusDatabase(getApplicationContext());
+        book = dbBook.find(idBook);
+
+        if(finishedIsChecked) {
+            status = new Status(book, 1, statusNotes, idBook);
+        } else {
+            status = new Status(book, 0, statusNotes, idBook);
+        }
+
+        dbStatus.create(status);
+        showSuccessMessage();
+        changeActivity(getBaseContext(), MainActivity.class);
+    }
+
+    private void getValuesFromView() {
+        notes = (EditText) findViewById(R.id.notes);
+        finishedIsChecked = ((CheckBox) findViewById(R.id.finished)).isChecked();
+        selectBook = (AutoCompleteTextView) findViewById(R.id.selectBook);
+    }
+
+    private void showSuccessMessage() {
+        showMessage("Status was created with success!");
     }
 }

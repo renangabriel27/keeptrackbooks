@@ -104,17 +104,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    protected void backToMain() {
-        ImageButton backBtn = (ImageButton) findViewById(R.id.backBtn);
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeActivity(getBaseContext(), MainActivity.class);
-            }
-        });
-    }
-
     protected void changeActivity(Context context, Class nameClass) {
         Intent intent = new Intent(context, nameClass);
         startActivity(intent);
@@ -122,6 +111,14 @@ public class MainActivity extends AppCompatActivity {
 
     protected boolean fieldIsEmpty(EditText text) {
         return text.getText().toString().trim().equals("") || text.getText().toString().trim().equals("");
+    }
+
+    protected void showMessage(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    protected void showMessageWhenFieldsEmpty() {
+        showMessage("The field(s) can't be empty!");
     }
 
     private void changeToNewStatus() {
@@ -157,9 +154,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
 
 }

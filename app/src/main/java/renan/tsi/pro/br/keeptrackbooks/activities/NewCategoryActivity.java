@@ -12,23 +12,27 @@ import renan.tsi.pro.br.keeptrackbooks.models.Category;
 
 public class NewCategoryActivity extends MainActivity {
 
+    private SQLiteCategoryDatabase db;
+    private EditText nameCategory;
+    private Category category;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_category);
 
-        backToMain();
+        changeToMain();
         saveCategory();
     }
 
     private void createCategory(EditText nameCategory) {
-        SQLiteCategoryDatabase db = new SQLiteCategoryDatabase(getApplicationContext());
+        db = new SQLiteCategoryDatabase(getApplicationContext());
 
-        Category category = new Category(nameCategory.getText().toString());
+        category = new Category(nameCategory.getText().toString());
 
         db.create(category);
 
-        Toast.makeText(getBaseContext(), "Category was created with success!", Toast.LENGTH_LONG).show();
+        showSuccessMessage();
         changeActivity(getBaseContext(), CategoriesActivity.class);
     }
 
@@ -38,14 +42,21 @@ public class NewCategoryActivity extends MainActivity {
         createCategoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText nameCategory = (EditText) findViewById(R.id.editCategory);
-
-                if (fieldIsEmpty(nameCategory)){
-                    Toast.makeText(getApplicationContext(), "The field can't be empty!", Toast.LENGTH_LONG).show();
-                } else {
-                    createCategory(nameCategory);
-                }
+                nameCategory = (EditText) findViewById(R.id.editCategory);
+                validateAndCreate();
             }
         });
+    }
+
+    private void validateAndCreate() {
+        if (fieldIsEmpty(nameCategory)){
+            showMessageWhenFieldsEmpty();
+        } else {
+            createCategory(nameCategory);
+        }
+    }
+
+    private void showSuccessMessage() {
+        showMessage("Category was created with success!");
     }
 }

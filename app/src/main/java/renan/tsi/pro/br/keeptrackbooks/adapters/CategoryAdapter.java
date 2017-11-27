@@ -29,7 +29,6 @@ public class CategoryAdapter extends BaseAdapter {
     public void add(Category c){
         categories.add(c);
         notifyDataSetChanged();
-        Log.d("PDM",">>"+categories.size());
     }
 
     public void remove(int index){
@@ -54,7 +53,6 @@ public class CategoryAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        Log.d("PDM","VIEW"+categories.size());
         Category c = categories.get(i);
 
         View v = inflater.inflate(R.layout.adapter_category_layout, null);

@@ -27,10 +27,14 @@ public class CategoriesActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
-        dbCategory = new SQLiteCategoryDatabase(getApplicationContext());
-        backToMain();
+        setDbCategory();
+        changeToMain();
         changeToNewCategory();
         setListView();
+    }
+
+    private void setDbCategory() {
+        dbCategory = new SQLiteCategoryDatabase(getApplicationContext());
     }
 
     private void sendCategoryIdWhenChangeActivity(ListAdapter categoryAdapter, int position) {

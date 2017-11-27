@@ -20,29 +20,20 @@ public class Book {
     private int _id;
     private String title;
     private int numberPages;
-    private int categoryId;
     private Category category;
     private static SQLiteBookDatabase dao;
 
-    public Book(int _id, String title, int numberPages, int categoryId) {
-        this._id = _id;
-        this.title = title;
-        this.numberPages = numberPages;
-        this.categoryId = categoryId;
-    }
-
-    public Book(int _id, String title, int numberPages, Category category, int categoryId) {
+    public Book(int _id, String title, int numberPages, Category category) {
         this._id = _id;
         this.title = title;
         this.numberPages = numberPages;
         this.category = category;
-        this.categoryId = categoryId;
     }
 
-    public Book(String title, int numberPages, int categoryId) {
+    public Book(String title, int numberPages,Category category) {
         this.title = title;
         this.numberPages = numberPages;
-        this.categoryId = categoryId;
+        this.category = category;
     }
 
     public int getId() {
@@ -65,14 +56,6 @@ public class Book {
         this.numberPages = numberPages;
     }
 
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
-
     public Category getCategory() {
         return category;
     }
@@ -83,7 +66,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return title;
+        return title + " " + _id;
     }
 
     public static Book find(int id, Context context) {

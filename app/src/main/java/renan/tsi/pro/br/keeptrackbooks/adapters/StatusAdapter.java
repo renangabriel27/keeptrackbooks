@@ -30,7 +30,6 @@ public class StatusAdapter extends BaseAdapter {
     public void add(Status s){
         status.add(s);
         notifyDataSetChanged();
-        Log.d("PDM",">>"+status.size());
     }
 
     public void remove(int index){
@@ -56,7 +55,6 @@ public class StatusAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        Log.d("PDM","VIEW"+status.size());
         Status s = status.get(i);
 
         View v = inflater.inflate(R.layout.adapter_status_layout, null);

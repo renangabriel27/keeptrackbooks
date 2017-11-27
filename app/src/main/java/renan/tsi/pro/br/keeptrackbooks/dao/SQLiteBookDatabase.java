@@ -49,7 +49,7 @@ public class SQLiteBookDatabase extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("title", b.getTitle());
         values.put("number_pages", b.getNumberPages());
-        values.put("category_id", b.getCategoryId());
+        values.put("category_id", b.getCategory().getId());
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -71,8 +71,7 @@ public class SQLiteBookDatabase extends SQLiteOpenHelper {
             result = new Book(cursor.getInt(0),
                                   cursor.getString(1),
                                   cursor.getInt(2),
-                                  category,
-                                  cursor.getInt(3));
+                                  category);
         }
 
         db.close();
@@ -94,7 +93,7 @@ public class SQLiteBookDatabase extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("title", b.getTitle());
         values.put("number_pages", b.getNumberPages());
-        values.put("category_id", b.getCategoryId());
+        values.put("category_id", b.getCategory().getId());
 
         db.update("books", values, "id = ?",
                 new String[] { String.valueOf(b.getId()) });
@@ -116,8 +115,7 @@ public class SQLiteBookDatabase extends SQLiteOpenHelper {
                 result.add(new Book(cursor.getInt(0),
                                     cursor.getString(1),
                                     cursor.getInt(2),
-                                    category,
-                                    cursor.getInt(3)));
+                                    category));
             } while (cursor.moveToNext());
         }
 

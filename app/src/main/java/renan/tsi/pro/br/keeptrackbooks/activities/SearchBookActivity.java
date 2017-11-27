@@ -35,29 +35,33 @@ import renan.tsi.pro.br.keeptrackbooks.models.Book;
 public class SearchBookActivity extends MainActivity {
 
     private ArrayList<String> result = new ArrayList<String>();
+    private ListView lv;
+    private ListAdapter searchBookAdapter;
+    private Button searchBtn;
+    private EditText nameForSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_book);
 
-        backToMain();
+        changeToMain();
         sendRequisition();
     }
 
     private void sendRequisition() {
-        Button searchBtn = (Button) findViewById(R.id.searchBtn);
+        searchBtn = (Button) findViewById(R.id.searchBtn);
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText nameForSearch = (EditText) findViewById(R.id.nameForSearch);
+                nameForSearch = (EditText) findViewById(R.id.nameForSearch);
 
                 if (fieldIsEmpty(nameForSearch)) {
-                    Toast.makeText(getApplicationContext(), "The field can't be empty!", Toast.LENGTH_LONG).show();
+                    showMessageWhenFieldsEmpty();
                 } else {
                     result.clear();
-                    Toast.makeText(getApplicationContext(), "Carregando...", Toast.LENGTH_LONG).show();
+                    showMessage("Carregando...");
                     requisitionGetJson(nameForSearch.getText().toString());
                 }
             }
@@ -65,9 +69,9 @@ public class SearchBookActivity extends MainActivity {
     }
 
     private void setListView() {
-        ListView lv = (ListView) findViewById(R.id.searchListView);
+        lv = (ListView) findViewById(R.id.searchListView);
 
-        final ListAdapter searchBookAdapter = new SearchBookAdapter(result, getLayoutInflater());
+        searchBookAdapter = new SearchBookAdapter(result, getLayoutInflater());
         lv.setAdapter(searchBookAdapter);
     }
 
@@ -86,7 +90,6 @@ public class SearchBookActivity extends MainActivity {
                             items = response.getJSONArray("items");
 
                             for (int i = 0; i < items.length(); i++) {
-                                JSONObject bookJson;
                                 try {
                                     JSONObject jsonObject = items.getJSONObject(i);
                                     JSONObject volumeInfo = jsonObject.getJSONObject("volumeInfo");
@@ -96,8 +99,6 @@ public class SearchBookActivity extends MainActivity {
 
                                     String bookFormated = title + "\n" + category + "\n" + pageCount + " pages";
                                     result.add(bookFormated);
-
-                                    Log.v("Debug", " " +  title + " / " + category + " / " + pageCount);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     continue;
@@ -106,7 +107,7 @@ public class SearchBookActivity extends MainActivity {
                                 }
                             }
                         } catch(JSONException e) {
-                            Toast.makeText(getApplicationContext(), "Erro na conexão", Toast.LENGTH_LONG).show();
+                            showMessage("Erro na conexão!");
                         }
                     }
                 },
@@ -115,7 +116,7 @@ public class SearchBookActivity extends MainActivity {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Livro não encontrado!", Toast.LENGTH_LONG).show();
+                        showMessage("Livro não encontrado!");
                     }
                 });
         queue.add(stringRequest);

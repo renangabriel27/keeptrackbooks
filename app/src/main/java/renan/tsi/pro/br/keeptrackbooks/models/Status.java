@@ -86,10 +86,7 @@ public class Status extends Application {
     }
 
     public String getStatusFormated(int status) {
-        if(status == 1) {
-            return "Done";
-        }
-        return "In progress";
+        return (status == 1) ? "Done" : "In progress";
     }
 
     @Override

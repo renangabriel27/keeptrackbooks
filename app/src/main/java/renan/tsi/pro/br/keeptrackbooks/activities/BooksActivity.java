@@ -3,6 +3,7 @@ package renan.tsi.pro.br.keeptrackbooks.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,12 +15,18 @@ import java.util.ArrayList;
 
 import renan.tsi.pro.br.keeptrackbooks.R;
 import renan.tsi.pro.br.keeptrackbooks.adapters.BookAdapter;
+import renan.tsi.pro.br.keeptrackbooks.adapters.CategoryAdapter;
+import renan.tsi.pro.br.keeptrackbooks.dao.SQLiteCategoryDatabase;
 import renan.tsi.pro.br.keeptrackbooks.models.Book;
 import renan.tsi.pro.br.keeptrackbooks.models.Category;
 
 public class BooksActivity extends MainActivity {
 
-    protected int idCategory;
+    private Category category = new Category();
+    private ArrayAdapter<Category> catAdapter;
+    private ListAdapter bookAdapter;
+    private AutoCompleteTextView selectCategory;
+    private SQLiteCategoryDatabase dbCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,18 +39,18 @@ public class BooksActivity extends MainActivity {
     }
 
     protected void setAutoCompleteForCategory() {
-        final ArrayAdapter<Category> catAdapter = new ArrayAdapter<Category>(this,
+        catAdapter = new ArrayAdapter<Category>(this,
                 android.R.layout.simple_dropdown_item_1line, getCategories());
 
-        AutoCompleteTextView textView = (AutoCompleteTextView)
+        selectCategory = (AutoCompleteTextView)
                 findViewById(R.id.selectEditCategory);
 
-        textView.setAdapter(catAdapter);
-        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        selectCategory.setAdapter(catAdapter);
+        selectCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                setIdForCategory(catAdapter.getItem(position).getId());
+                setCategory(catAdapter, position);
             }
         });
     }
@@ -58,11 +65,15 @@ public class BooksActivity extends MainActivity {
         return  c;
     }
 
-    protected void setIdForCategory(int id) {
-        this.idCategory = id;
+    protected  void setCategory(ArrayAdapter<Category> categoryAdapter, int position) {
+        int categoryId = categoryAdapter.getItem(position).getId();
+        Log.d("ID CAT", "" + categoryId);
+        dbCategory = new SQLiteCategoryDatabase(getApplicationContext());
+        this.category = dbCategory.find(categoryId);
+        Log.d("CAT", "" + this.category);
     }
 
-    protected  int getIdCategory() { return this.idCategory; }
+    protected Category getCategory() { return this.category; }
 
     private void sendBookIdWhenChangeActivity(ListAdapter bookAdapter, int position) {
         Bundle params = new Bundle();
@@ -75,7 +86,7 @@ public class BooksActivity extends MainActivity {
     private void setListView() {
         ListView lv = (ListView) findViewById(R.id.listViewBooks);
 
-        final ListAdapter bookAdapter = new BookAdapter(
+        bookAdapter = new BookAdapter(
                 (ArrayList<Book>) Book.all(getApplicationContext()), getLayoutInflater());
         lv.setAdapter(bookAdapter);
 

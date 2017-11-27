@@ -21,19 +21,24 @@ import renan.tsi.pro.br.keeptrackbooks.services.ServiceBook;
 
 public class NewBookActivity extends BooksActivity {
 
+    private String bookName;
+    private int bookNumberPages = 0;
+    private EditText nameBook;
+    private EditText numberPages;
+    private AutoCompleteTextView category;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_book);
 
-        backToMain();
+        changeToMain();
         saveBook();
         setAutoCompleteForCategory();
     }
 
     private void createBook(EditText nameBook, EditText numberPages) {
-        String bookName = nameBook.getText().toString();
-        int bookNumberPages = 0;
+        bookName = nameBook.getText().toString();
 
         try {
             bookNumberPages = Integer.parseInt(numberPages.getText().toString());
@@ -41,15 +46,14 @@ public class NewBookActivity extends BooksActivity {
             e.printStackTrace();
         }
 
-        Log.d("IDD", ""  + idCategory);
-        Book book = new Book(bookName, bookNumberPages, idCategory);
+        Book book = new Book(bookName, bookNumberPages, getCategory());
 
         SQLiteBookDatabase db = new SQLiteBookDatabase(getApplicationContext());
         db.create(book);
-        Toast.makeText(getBaseContext(), "Book was created with success!", Toast.LENGTH_LONG).show();
+
 
         initService();
-
+        showSuccessMessage();
         changeActivity(getBaseContext(), BooksActivity.class);
     }
 
@@ -64,19 +68,22 @@ public class NewBookActivity extends BooksActivity {
         createBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText nameBook = (EditText) findViewById(R.id.editBookTitle);
-                EditText numberPages = (EditText) findViewById(R.id.editNumberPages);
-                AutoCompleteTextView textView = (AutoCompleteTextView)
-                        findViewById(R.id.selectEditCategory);
+                nameBook = (EditText) findViewById(R.id.editBookTitle);
+                numberPages = (EditText) findViewById(R.id.editNumberPages);
+                category = (AutoCompleteTextView) findViewById(R.id.selectEditCategory);
 
-                if (fieldIsEmpty(nameBook) || fieldIsEmpty(numberPages) || fieldIsEmpty(textView)){
-                    Toast.makeText(getApplicationContext(), "The field(s) can't be empty!", Toast.LENGTH_LONG).show();
-                } else if(idCategory == 0) {
-                    Toast.makeText(getApplicationContext(), "Invalid category!", Toast.LENGTH_LONG).show();
+                if (fieldIsEmpty(nameBook) || fieldIsEmpty(numberPages) || fieldIsEmpty(category)){
+                    showMessageWhenFieldsEmpty();
+                } else if(getCategory().getId() == 0) {
+                    showMessage("Invalid category!");
                 } else {
                     createBook(nameBook, numberPages);
                 }
             }
         });
+    }
+
+    private void showSuccessMessage() {
+        showMessage("Book was created with success!");
     }
 }

@@ -17,6 +17,8 @@ public class Category {
     private int _id;
     private static SQLiteCategoryDatabase dao;
 
+    public Category() {}
+
     public Category(String name) {
         this.name = name;
     }

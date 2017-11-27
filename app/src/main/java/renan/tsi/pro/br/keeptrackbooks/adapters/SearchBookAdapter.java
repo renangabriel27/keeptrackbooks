@@ -30,7 +30,6 @@ public class SearchBookAdapter extends BaseAdapter {
     public void add(String b){
         books.add(b);
         notifyDataSetChanged();
-        Log.d("PDM",">>"+books.size());
     }
 
     public void remove(int index){
